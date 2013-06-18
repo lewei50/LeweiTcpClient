@@ -1,0 +1,26 @@
+#######################################
+# Syntax Coloring Map For LeweiTcpClient
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+LeweiTcpClient	KEYWORD1
+UserFunction	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+uploadSensorValue	KEYWORD2
+keepOnline	KEYWORD2
+connentTcpServer KEYWORD2
+addUserFunction KEYWORD2
+sendSensorValue KEYWORD2
+setRevCtrlMsg KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
