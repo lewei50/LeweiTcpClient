@@ -45,9 +45,6 @@ void setup()
 void loop()
 {
     client->keepOnline();
-    
-    //client->sendSensorValue("tcp1",129);
-    //delay(1000);
 }
 
 
@@ -56,8 +53,8 @@ void test1(char * p1)
 {
   client->setRevCtrlMsg("true","message to server");
   Serial.println("test function recall1");
-  double pi = 3241.59;//*random(10);
-  client->sendSensorValue("tcp1",pi);
+  //double pi = 3241.59;//*random(10);
+  //client->sendSensorValue("tcp1",pi);
   Serial.println(p1);
 }
 //function test2 use 2 parameter,on the website,it point to "p1,p2"
@@ -65,7 +62,7 @@ void test2(char * p1,char * p2)
 {
   Serial.println("test function recall2");
   Serial.println(p1);
-  client->sendSensorValue("tcp1",301);
+  //client->sendSensorValue("tcp1",301);
   Serial.println(p2);
 }
 void test3(char * p1,char * p2,char * p3)
