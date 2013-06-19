@@ -15,10 +15,10 @@ UserFunction	KEYWORD1
 
 uploadSensorValue	KEYWORD2
 keepOnline	KEYWORD2
-connentTcpServer KEYWORD2
-addUserFunction KEYWORD2
-sendSensorValue KEYWORD2
-setRevCtrlMsg KEYWORD2
+connentTcpServer	KEYWORD2
+addUserFunction	KEYWORD2
+sendSensorValue	KEYWORD2
+setRevCtrlMsg	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)

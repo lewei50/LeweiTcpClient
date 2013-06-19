@@ -5,12 +5,13 @@
 
 
 /*
-LeweiTcpClient.h Library for tcp.lewei50.com to reverse control and open.lewei50.com to upload data
+LeweiTcpClient.h Library for tcp.lewei50.com to reverse control and upload data
 Create by yangbo
 gyangbo@gmail.com
 2013.6.4
 */
 
+//this structure is to hold the user's function's address and the name configured on the website
 struct UserFunctionNode
 {
 	void (*userFunctionAddr0)();
@@ -90,8 +91,8 @@ class LeweiTcpClient
 		void sendOnlineCommand();
 		void getResponse();
 		void setupDefaultValue();
-		char* getParaValue(String orig,String paraName);
-		String getParaValueStr(String orig,String paraName);
+		char* getParaValue(String &orig,String paraName);
+		String getParaValueStr(String &orig,String paraName);
 		
 		String _revCtrlResult;
 		String _revCtrlMsg;

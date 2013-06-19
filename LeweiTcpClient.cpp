@@ -130,7 +130,7 @@ void LeweiTcpClient::setupDefaultValue()
 	_mac[4]= 0x30;
 	_mac[5]= 0x31;
 	*/
-	_postInterval = 60000;//server setting is 60000
+	_postInterval = 5000;//server setting is 60000
 	_starttime = millis();
 	setRevCtrlMsg("false","");
 	String tcpServerStr = "tcp.lewei50.com";
@@ -194,9 +194,9 @@ void LeweiTcpClient::getResponse()
 	}
 	else if(_clientStr.length()>0)
 	{
+		String retMessage = "not found this function on arduino";
 		Serial.print("message from server:");
 		Serial.println(_clientStr);
-		String retMessage = "not found this function on arduino";
 		String functionName = getParaValueStr(_clientStr,"f");
 		char* p1 = getParaValue(_clientStr,"p1");
 		char* p2 = getParaValue(_clientStr,"p2");
@@ -205,8 +205,8 @@ void LeweiTcpClient::getResponse()
 		char* p5 = getParaValue(_clientStr,"p5");
 		if(!functionName.equals(""))//here comes user defined command
 		{
-  		//Serial.println("functionName is:");
-			//Serial.println(functionName);
+  		Serial.println("functionName is:");
+			Serial.println(functionName);
 			//countUserFunction();
 			UserFunctionNode * current = head;
 			while(current!=NULL)
@@ -271,7 +271,7 @@ void LeweiTcpClient::getResponse()
 	}
 }
 
-char* LeweiTcpClient::getParaValue(String orig,String paraName)
+char* LeweiTcpClient::getParaValue(String &orig,String paraName)
 {
 		int functionNameStartPos = orig.indexOf("\""+paraName+"\":\"");
 		if(functionNameStartPos<0)return NULL;
@@ -286,7 +286,7 @@ char* LeweiTcpClient::getParaValue(String orig,String paraName)
 		return ret;
 }
 
-String LeweiTcpClient::getParaValueStr(String orig,String paraName)
+String LeweiTcpClient::getParaValueStr(String &orig,String paraName)
 {
 		int functionNameStartPos = orig.indexOf("\""+paraName+"\":\"");
 		if(functionNameStartPos<0)return NULL;
@@ -413,8 +413,8 @@ void LeweiTcpClient::sendSensorValue(String sensorName,String sensorValue)
 		Serial.println("disconnecting.");
 		_clientUpload.stop();
 	}
-	*/
 	
+	*/
 	
 }
 
@@ -476,36 +476,37 @@ void LeweiTcpClient::addUserFunction(UserFunction &uFunction)
 	
 	if(uFunction.userFunctionAddr5!=NULL)
 	{
-//		Serial.println("reg addr5.");
+		//Serial.println("reg addr5.");
 		n2->userFunctionAddr5 = uFunction.userFunctionAddr5;
 	}
 	else if(uFunction.userFunctionAddr4!=NULL)
 	{
-//		Serial.println("reg addr4.");
+		//Serial.println("reg addr4.");
 		n2->userFunctionAddr4 = uFunction.userFunctionAddr4;
 	}
 	else if(uFunction.userFunctionAddr3!=NULL)
 	{
-//		Serial.println("reg addr3.");
+		//Serial.println("reg addr3.");
 		n2->userFunctionAddr3 = uFunction.userFunctionAddr3;
 	}
 	else if(uFunction.userFunctionAddr2!=NULL)
 	{
-//		Serial.println("reg addr2.");
+		//Serial.println("reg addr2.");
 		n2->userFunctionAddr2 = uFunction.userFunctionAddr2;
 	}
 	else if(uFunction.userFunctionAddr1!=NULL)
 	{
-//		Serial.println("reg addr1.");
+		//Serial.println("reg addr1.");
 		n2->userFunctionAddr1 = uFunction.userFunctionAddr1;
 	}
 	else if(uFunction.userFunctionAddr0!=NULL)
 	{
-//		Serial.println("reg addr1.");
+		//Serial.println("reg addr0.");
 		n2->userFunctionAddr0 = uFunction.userFunctionAddr0;
 	}
 	
 	n2->userFunctionName = uFunction.userFunctionName;
+		//Serial.println(uFunction.userFunctionName);
 	if(head==NULL)
 	{
 		head = n2;
