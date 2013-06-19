@@ -244,13 +244,13 @@ void LeweiTcpClient::getResponse()
 		Serial.print("message from server:");
 		Serial.println(_clientStr);
 		String functionName = getParaValueStr(_clientStr,"f");
-		char* p1 = getParaValue(_clientStr,"p1");
-		char* p2 = getParaValue(_clientStr,"p2");
-		char* p3 = getParaValue(_clientStr,"p3");
-		char* p4 = getParaValue(_clientStr,"p4");
-		char* p5 = getParaValue(_clientStr,"p5");
 		if(!functionName.equals(""))//here comes user defined command
 		{
+			char* p1 = getParaValue(_clientStr,"p1");
+			char* p2 = getParaValue(_clientStr,"p2");
+			char* p3 = getParaValue(_clientStr,"p3");
+			char* p4 = getParaValue(_clientStr,"p4");
+			char* p5 = getParaValue(_clientStr,"p5");
   		Serial.println("functionName is:");
 			Serial.println(functionName);
 			//countUserFunction();
@@ -261,7 +261,7 @@ void LeweiTcpClient::getResponse()
 //				Serial.println(current->userFunctionName);
 				if(functionName.equals(current->userFunctionName))
 				{
-					retMessage = "execute function";//+functionName;
+					setRevCtrlMsg("true","execute function");
 					if(p5!=NULL)
 					{
 						Serial.println(5);
@@ -297,21 +297,18 @@ void LeweiTcpClient::getResponse()
 				}
 				current = current->next;
 			}
+			free(p1);free(p2);free(p3);free(p4);free(p5);
+			p1=p2=p3=p4=p5=NULL;
 		}
-						Serial.println(7);
-		free(p1);free(p2);free(p3);free(p4);free(p5);
-						Serial.println(8);
-		p1=p2=p3=p4=p5=NULL;
 		
-						Serial.println(9);
-						int len=strlen(_revCtrlResult)+strlen(_revCtrlMsg)+63;
-						Serial.println(len);
-						commandString=(char *)malloc(len);	
-	snprintf(commandString, len, "{\"method\":\"response\",\"result\":{\"successful\":%s,\"message\":\"%s\"}}&^!", _revCtrlResult, _revCtrlMsg);
-	Serial.println(commandString);
-	_clientRevCtrl.print(commandString);
-	free(commandString);
-	commandString = NULL;
+			int len=strlen(_revCtrlResult)+strlen(_revCtrlMsg)+63;
+			//Serial.println(len);
+			commandString=(char *)malloc(len);	
+			snprintf(commandString, len, "{\"method\":\"response\",\"result\":{\"successful\":%s,\"message\":\"%s\"}}&^!", _revCtrlResult, _revCtrlMsg);
+			//Serial.println(commandString);
+			_clientRevCtrl.print(commandString);
+			free(commandString);
+			commandString = NULL;
 	/*
 		_clientStr="";
 		_clientStr+=;
