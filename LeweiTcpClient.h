@@ -52,6 +52,8 @@ class LeweiTcpClient
 	public:
 		char tcpServer[16];
 		char uploadServer[17];
+		char * aliveString;
+		char * commandString;
 		boolean bIsConnecting;
 		LeweiTcpClient( const char *userKey,const char *gatewayNo);
 		LeweiTcpClient( const char *userKey,const char *gatewayNo,byte mac[]);
@@ -71,7 +73,7 @@ class LeweiTcpClient
 
 
 		void addUserFunction(UserFunction &uFunction);
-		void setRevCtrlMsg(String execResult,String msg);
+		void setRevCtrlMsg(char* execResult,char* msg);
 		void directResponse(String respStr);
 		char* strToChar(String str);
 
@@ -95,8 +97,8 @@ class LeweiTcpClient
 		char* getParaValue(String &orig,String paraName);
 		String getParaValueStr(String &orig,String paraName);
 		
-		String _revCtrlResult;
-		String _revCtrlMsg;
+		char* _revCtrlResult;
+		char* _revCtrlMsg;
 };
 
 #endif
