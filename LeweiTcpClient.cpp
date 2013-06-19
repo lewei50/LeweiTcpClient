@@ -346,18 +346,18 @@ void LeweiTcpClient::getResponse()
 
 char* LeweiTcpClient::getParaValue(String &orig,String paraName)
 {
-		Serial.print("getParaValue ");
-		Serial.println(paraName);
+		//Serial.print("getParaValue ");
+		//Serial.println(paraName);
 		int functionNameStartPos = orig.indexOf("\""+paraName+"\":\"");
 		if(functionNameStartPos<0)return NULL;
 		int functionNameEndPos = orig.indexOf("\"",functionNameStartPos+4+paraName.length());
 		String functionName = orig.substring(functionNameStartPos+4+paraName.length(),functionNameEndPos);
 		
 		char* c = strToChar(functionName);
-	  //char* c = (char*)malloc(functionName.length()+1);
-		//functionName.toCharArray(c,functionName.length()+1);
-		Serial.print("g---otParaValue ");
-		Serial.println(c);
+		  //char* c = (char*)malloc(functionName.length()+1);
+			//functionName.toCharArray(c,functionName.length()+1);
+		//Serial.print("g---otParaValue ");
+		//Serial.println(c);
 		return c;
 }
 
