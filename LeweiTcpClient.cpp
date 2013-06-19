@@ -430,28 +430,31 @@ void LeweiTcpClient::sendSensorValue(String sensorName,String sensorValue)
 	/*
 	//using tcp.lewei50.com to upload data
 	*/
-	Serial.print("connecting...");
-	Serial.println(tcpServer);
+	//Serial.print("connecting...");
+	//Serial.println(tcpServer);
 	if (_clientRevCtrl.connected())
 	{
 		Serial.println("sending data...");
 		//delay(800);
 		
-		/*
+		
 		String connStr = "{\"method\": \"upload\", \"data\":[{\"Name\":\""+sensorName+"\",\"Value\":\""+sensorValue+"\"}]}&^!";
 		
 		Serial.println(connStr);
 		char* c = (char*)malloc(connStr.length()+1);
-		connStr.toCharArray(c,connStr.length()+1);
-		_clientRevCtrl.print(c);
-		free(c);
-		c = NULL;
+		if(c)
+		{
+			connStr.toCharArray(c,connStr.length()+1);
+			_clientRevCtrl.print(c);
+			free(c);
+			c = NULL;
+		}
 		connStr = "";
-		*/
+		
 	}
 	else 
 	{
-		_clientRevCtrl.stop();
+		//_clientRevCtrl.stop();
 		// if you didn't get a connection to the server:
 		
 		Serial.println("data send failed");
