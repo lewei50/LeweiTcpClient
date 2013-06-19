@@ -73,6 +73,7 @@ class LeweiTcpClient
 		void addUserFunction(UserFunction &uFunction);
 		void setRevCtrlMsg(String execResult,String msg);
 		void directResponse(String respStr);
+		char* strToChar(String str);
 
 	private:
 		const char *_userKey;

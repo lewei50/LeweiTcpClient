@@ -130,7 +130,7 @@ void LeweiTcpClient::setupDefaultValue()
 	_mac[4]= 0x30;
 	_mac[5]= 0x31;
 	*/
-	_postInterval = 5000;//server setting is 60000
+	_postInterval = 10000;//server setting is 60000
 	_starttime = millis();
 	setRevCtrlMsg("false","");
 	String tcpServerStr = "tcp.lewei50.com";
@@ -140,17 +140,43 @@ void LeweiTcpClient::setupDefaultValue()
 	bIsConnecting = false;
 }
 
+char* LeweiTcpClient::strToChar(String str)
+{
+	char* c = (char*)malloc(str.length()+1);
+	if(!c)
+	{
+		Serial.print("strToChar::");
+		Serial.println(str);
+		Serial.println("strToChar::malloc failed");
+		return NULL;
+	}
+	str.toCharArray(c,str.length()+1);
+	return c;
+}
+
 void LeweiTcpClient::sendOnlineCommand()
 {
 		Serial.print("::sendOnlineCommand.current net state:");
 		Serial.println(_clientRevCtrl.status());
+		/*
+		_clientRevCtrl.print("{\"method\":\"update\",\"gatewayNo\":\""+String(_gatewayNo)+"\",\"userkey\":\""+String(_userKey)+"\"}&^!");
+		delay(1000);
+		*/
+		
 		String connStr = "{\"method\":\"update\",\"gatewayNo\":\""+String(_gatewayNo)+"\",\"userkey\":\""+String(_userKey)+"\"}&^!";
-		char* c = (char*)malloc(connStr.length()+1);
-		connStr.toCharArray(c,connStr.length()+1);
-		_clientRevCtrl.print(c);
-		free(c);
-		c = NULL;
+		char* c = strToChar(connStr);
+//		char* c = (char*)malloc(connStr.length()+1);
+//		if(!c)Serial.println("sendOnlineCommand::malloc failed");
+//		else Serial.println("sendOnlineCommand::malloc success");
+//		connStr.toCharArray(c,connStr.length()+1);
+		if(c)
+		{
+			_clientRevCtrl.print(c);
+		}
+			free(c);
+			c = NULL;
 		connStr = "";
+		
 }
 
 void LeweiTcpClient::keepOnline()
@@ -194,7 +220,7 @@ void LeweiTcpClient::getResponse()
 	}
 	else if(_clientStr.length()>0)
 	{
-		String retMessage = "not found this function on arduino";
+		String retMessage = "function not binded";
 		Serial.print("message from server:");
 		Serial.println(_clientStr);
 		String functionName = getParaValueStr(_clientStr,"f");
@@ -218,52 +244,72 @@ void LeweiTcpClient::getResponse()
 					retMessage = "execute "+functionName;
 					if(p5!=NULL)
 					{
+						Serial.println(5);
 						execute(current->userFunctionAddr5,p1,p2,p3,p4,p5);
 					}
 					else if(p4!=NULL)
 					{
+						Serial.println(4);
 						execute(current->userFunctionAddr4,p1,p2,p3,p4);
 					}
 					else if(p3!=NULL)
 					{
+						Serial.println(3);
 						execute(current->userFunctionAddr3,p1,p2,p3);
 					}
 					else if(p2!=NULL)
 					{
+						Serial.println(2);
 						execute(current->userFunctionAddr2,p1,p2);
 					}
 					else if(p1!=NULL)
 					{
+						Serial.println(1);
 						execute(current->userFunctionAddr1,p1);
 					}
 					else
 					{
+						Serial.println(0);
 						execute(current->userFunctionAddr0);
 					}
-					free(p1);
-					free(p2);
-					free(p3);
-					free(p4);
-					free(p5);
-					p1=p2=p3=p4=p5=NULL;
 					//execute(current->userFunctionAddr);
 					break;
 				}
 				current = current->next;
 			}
 		}
+						Serial.println(7);
+		free(p1);free(p2);free(p3);free(p4);free(p5);
+						Serial.println(8);
+		p1=p2=p3=p4=p5=NULL;
+		
+						Serial.println(9);
 		_clientStr="{\"method\":\"response\",\"result\":{\"successful\":";
 		_clientStr+=_revCtrlResult;
 		_clientStr+=",\"message\":\"";
 		if(_revCtrlMsg!="")_clientStr+=_revCtrlMsg;
 		else _clientStr+=retMessage;
 		_clientStr+="\"}}&^!";
+						Serial.println(10);
+		char* c = strToChar(_clientStr);
+						Serial.println(11);
+		if(c)
+		{
+			_clientRevCtrl.print(c);
+			Serial.print(c);
+		}
+			free(c);
+			c = NULL;
+						Serial.println(12);
+		/*
 		char* c = (char*)malloc(_clientStr.length()+1);
 		_clientStr.toCharArray(c,_clientStr.length()+1);
 		_clientRevCtrl.print(c);
 		Serial.print(c);
 		free(c);
 		c = NULL;
+		*/
+		
 		Serial.println("response to server.");
 		_clientStr = "";
 		_revCtrlResult = "false";
@@ -273,17 +319,19 @@ void LeweiTcpClient::getResponse()
 
 char* LeweiTcpClient::getParaValue(String &orig,String paraName)
 {
+		Serial.print("getParaValue ");
+		Serial.println(paraName);
 		int functionNameStartPos = orig.indexOf("\""+paraName+"\":\"");
 		if(functionNameStartPos<0)return NULL;
 		int functionNameEndPos = orig.indexOf("\"",functionNameStartPos+4+paraName.length());
 		String functionName = orig.substring(functionNameStartPos+4+paraName.length(),functionNameEndPos);
 		
-		//char *ret = NULL;
-		//ret = new char[sizeof(functionName)];
-	  //memcpy(ret,functionName.c_str(),sizeof(functionName));
-	  char* ret = (char*)malloc(functionName.length()+1);
-		functionName.toCharArray(ret,functionName.length()+1);
-		return ret;
+		char* c = strToChar(functionName);
+	  //char* c = (char*)malloc(functionName.length()+1);
+		//functionName.toCharArray(c,functionName.length()+1);
+		Serial.print("g---otParaValue ");
+		Serial.println(c);
+		return c;
 }
 
 String LeweiTcpClient::getParaValueStr(String &orig,String paraName)
@@ -361,6 +409,8 @@ void LeweiTcpClient::sendSensorValue(String sensorName,String sensorValue)
 	{
 		Serial.println("sending data...");
 		//delay(800);
+		
+		/*
 		String connStr = "{\"method\": \"upload\", \"data\":[{\"Name\":\""+sensorName+"\",\"Value\":\""+sensorValue+"\"}]}&^!";
 		
 		Serial.println(connStr);
@@ -370,6 +420,7 @@ void LeweiTcpClient::sendSensorValue(String sensorName,String sensorValue)
 		free(c);
 		c = NULL;
 		connStr = "";
+		*/
 	}
 	else 
 	{
