@@ -99,6 +99,7 @@ class LeweiTcpClient
 		
 		char* _revCtrlResult;
 		char* _revCtrlMsg;
+		void checkFreeMem();
 };
 
 #endif
