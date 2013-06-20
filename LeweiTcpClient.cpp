@@ -507,17 +507,18 @@ void LeweiTcpClient::sendSensorValue(String sensorName,int sensorValue)
 
 void LeweiTcpClient::sendSensorValue(String sensorName,float sensorValue)
 {
-	char s[20];
+	char s[10];
 	int val_len = snprintf(s, 10,"%d.%02u", (int)sensorValue, (int)(abs(sensorValue)*100+0.5) % 100);
-	//Serial.println(s);
 	sendSensorValue(sensorName,(String)s);
+	
 }
 
 void LeweiTcpClient::sendSensorValue(String sensorName,double sensorValue)
 {
-	char s[20];
+	char s[10];
 	int val_len = snprintf(s, 10,"%d.%02u", (int)sensorValue, (int)(abs(sensorValue)*100+0.5) % 100);
 	sendSensorValue(sensorName,(String)s);
+	
 }
 
 
