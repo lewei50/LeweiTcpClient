@@ -1,17 +1,25 @@
 LeweiTcpClient
 ==============
-这个库文件用于arduino+w5100网络模块与乐联网（www.lewei50.com）进行长连接反向控制并发送传感器数据使用。
+Using this library is the one of the most easiest way to 
 
-写此库的目的是为了尽量简化arduino端的代码，让反向控制实现起来更容易，发送传感器数据的代码更简洁。
+keep connected to www.lewei50.com to store your data and make your arduino "controllable" from the Internet/Smart Phone.
 
+only 3 steps between you and your arduino controllable by using this library:
 
-由于不同的版本的arduino运行内存不一样，对于uno板，请使用此版本的简化版分支
+step1:define your apikey and gateway number in your .ino file.
+step2:copy this line into your loop() function,client->keepOnline();
+step3:bind your function you write in arduino to the name you defined on website.
+
+(check more detail in the example file.)
+
+then it's all under your controll.
+
+* because of the difference between arduino boards,we HIGHLY RECOMMENDED your using the lite version for your UNO board.
+* UNO is running on less memory(2K),so you'd better using this one below:
 https://github.com/lewei50/LeweiTcpClient/tree/LeweiTcpClientLite
-
-
-
-简化版仅支持服务端设置的0～2个参数传递给客户端（此版本支持0～5个）。
-
-有问题，请加QQ群59162154讨论。
+* the lite version can only accept 0/1/2 parameter(s) from the website you defined on it.
+* the normal version can accecpt 0/1/2/3/4/5 parameter(s).
 
 Enjoy it~
+
+Email:gyangbo@gmail.com
