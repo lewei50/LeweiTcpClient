@@ -2,9 +2,9 @@ LeweiTcpClient
 ==============
 Using this library is the one of the most easiest way to 
 
-keep connected to www.lewei50.com to store your data and make your arduino "controllable" from the Internet/Smart Phone.
+keep connected to www.lewei50.com to store your data and make your arduino "controllable" from the Internet/your Smart Phone.
 
-only 3 steps between you and your arduino controllable by using this library:
+Now,only 3 steps between you and your arduino controllable:
 
 step1:define your apikey and gateway number in your .ino file.
 step2:copy this line into your loop() function,client->keepOnline();
