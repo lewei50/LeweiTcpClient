@@ -6,10 +6,11 @@ keep connected to www.lewei50.com to store your data and make your arduino "cont
 
 Now,only 3 steps between you and your arduino controllable:
 
-*step1:define your apikey and gateway number in your .ino file.
+step1:define your apikey and gateway number in your .ino file.
 
-*step2:copy this line into your loop() function,client->keepOnline();
-*step3:bind your function you write in arduino to the name you defined on website.
+step2:copy this line into your loop() function,client->keepOnline();
+
+step3:bind your function you write in arduino to the name you defined on website.
 
 (check more detail in the example file.)
 
