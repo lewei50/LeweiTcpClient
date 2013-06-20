@@ -6,9 +6,9 @@ UserFunction::UserFunction(void (*callfuct)(),const char *uFunctionName)
 	userFunctionAddr0=callfuct;
 	userFunctionAddr1=NULL;
 	userFunctionAddr2=NULL;
-	userFunctionAddr3=NULL;
-	userFunctionAddr4=NULL;
-	userFunctionAddr5=NULL;
+	//userFunctionAddr3=NULL;
+	//userFunctionAddr4=NULL;
+	//userFunctionAddr5=NULL;
 	userFunctionName=uFunctionName;
 	next = NULL;
 }
@@ -17,9 +17,9 @@ UserFunction::UserFunction(void (*callfuct)(char*),const char *uFunctionName)
 	userFunctionAddr0=NULL;
 	userFunctionAddr1=callfuct;
 	userFunctionAddr2=NULL;
-	userFunctionAddr3=NULL;
-	userFunctionAddr4=NULL;
-	userFunctionAddr5=NULL;
+	//userFunctionAddr3=NULL;
+	//userFunctionAddr4=NULL;
+	//userFunctionAddr5=NULL;
 	userFunctionName=uFunctionName;
 	next = NULL;
 }
@@ -28,12 +28,14 @@ UserFunction::UserFunction(void (*callfuct)(char*,char*),const char *uFunctionNa
 	userFunctionAddr0=NULL;
 	userFunctionAddr1=NULL;
 	userFunctionAddr2=callfuct;
-	userFunctionAddr3=NULL;
-	userFunctionAddr4=NULL;
-	userFunctionAddr5=NULL;
+	//userFunctionAddr3=NULL;
+	//userFunctionAddr4=NULL;
+	//userFunctionAddr5=NULL;
 	userFunctionName=uFunctionName;
 	next = NULL;
 }
+
+/*
 UserFunction::UserFunction(void (*callfuct)(char*,char*,char*),const char *uFunctionName)
 {
 	userFunctionAddr0=NULL;
@@ -41,7 +43,7 @@ UserFunction::UserFunction(void (*callfuct)(char*,char*,char*),const char *uFunc
 	userFunctionAddr2=NULL;
 	userFunctionAddr3=callfuct;
 	userFunctionAddr4=NULL;
-	userFunctionAddr5=NULL;
+	//userFunctionAddr5=NULL;
 	userFunctionName=uFunctionName;
 	next = NULL;
 }
@@ -52,7 +54,7 @@ UserFunction::UserFunction(void (*callfuct)(char*,char*,char*,char*),const char 
 	userFunctionAddr2=NULL;
 	userFunctionAddr3=NULL;
 	userFunctionAddr4=callfuct;
-	userFunctionAddr5=NULL;
+	//userFunctionAddr5=NULL;
 	userFunctionName=uFunctionName;
 	next = NULL;
 }
@@ -67,6 +69,8 @@ UserFunction::UserFunction(void (*callfuct)(char*,char*,char*,char*,char*),const
 	userFunctionName=uFunctionName;
 	next = NULL;
 }
+*/
+
 
 LeweiTcpClient::LeweiTcpClient(const char *userKey,const char *gatewayNo)
 {
@@ -115,6 +119,7 @@ LeweiTcpClient::LeweiTcpClient( const char *userKey,const char *gatewayNo,byte m
 
 void LeweiTcpClient::setupDefaultValue()
 {
+	checkFreeMem();
 	head = NULL;
 	//tcpServer = IPAddress(42,121,128,216); //tcp.lewei50.com's ip
 	//uploadServer = IPAddress(121,197,10,140);// "open.lewei50.com";
@@ -122,20 +127,14 @@ void LeweiTcpClient::setupDefaultValue()
 	//char uploadServer[] = "open.lewei50.com";
 	
 	byte _mac[] = {0x74, 0x69, 0x69, 0x2D, 0x30, 0x31};
-	/*
-	_mac[0]= 0x74;
-	_mac[1]= 0x69;
-	_mac[2]= 0x69;
-	_mac[3]= 0x2D;
-	_mac[4]= 0x30;
-	_mac[5]= 0x31;
-	*/
 	_postInterval = 10000;//server setting is 60000
 	_starttime = millis();
 	String tcpServerStr = "tcp.lewei50.com";
 	tcpServerStr.toCharArray(tcpServer,16);
+	tcpServerStr = NULL;
 	String uploadServerStr = "open.lewei50.com";
 	uploadServerStr.toCharArray(uploadServer,17);
+	uploadServerStr = NULL;
 	bIsConnecting = false;
 	
 	int len=strlen(_gatewayNo)+strlen(_userKey)+51;
@@ -144,16 +143,7 @@ void LeweiTcpClient::setupDefaultValue()
 	
 
 	setRevCtrlMsg("false","function not binded");
-	
-	/*
-	strcat(aliveString,"{\"method\":\"update\",\"gatewayNo\":\"");
-	Serial.println(aliveString);
-	strcat(aliveString,_gatewayNo);
-	strcat(aliveString,"\",\"userkey\":\"");
-	strcat(aliveString,_userKey);
-	strcat(aliveString,"\"}&^!");
-	Serial.print("aliveString:");
-	*/
+
 }
 
 char* LeweiTcpClient::strToChar(String str)
@@ -240,19 +230,24 @@ void LeweiTcpClient::getResponse()
 	}
 	else if(_clientStr.length()>0)
 	{
-		char* retMessage = "function not binded";
+		//char* retMessage = "function not binded";
 		Serial.print("message from server:");
 		Serial.println(_clientStr);
+		checkFreeMem();
 		String functionName = getParaValueStr(_clientStr,"f");
-		if(!functionName.equals(""))//here comes user defined command
-		{
 			char* p1 = getParaValue(_clientStr,"p1");
 			char* p2 = getParaValue(_clientStr,"p2");
-			char* p3 = getParaValue(_clientStr,"p3");
-			char* p4 = getParaValue(_clientStr,"p4");
-			char* p5 = getParaValue(_clientStr,"p5");
+			//char* p3 = getParaValue(_clientStr,"p3");
+			//char* p4 = getParaValue(_clientStr,"p4");
+			//char* p5 = getParaValue(_clientStr,"p5");
+			_clientStr = NULL;
+		checkFreeMem();
+		if(!functionName.equals(""))//here comes user defined command
+		{
   		Serial.println("functionName is:");
+		checkFreeMem();
 			Serial.println(functionName);
+		checkFreeMem();
 			//countUserFunction();
 			UserFunctionNode * current = head;
 			while(current!=NULL)
@@ -261,45 +256,61 @@ void LeweiTcpClient::getResponse()
 //				Serial.println(current->userFunctionName);
 				if(functionName.equals(current->userFunctionName))
 				{
-					setRevCtrlMsg("true","execute function");
+		checkFreeMem();
+		Serial.flush();
+  		Serial.println("a");
+					//setRevCtrlMsg("true","execute function");
+  		Serial.println("b");
+					/*
 					if(p5!=NULL)
 					{
-						Serial.println(5);
+						//Serial.println(5);
 						execute(current->userFunctionAddr5,p1,p2,p3,p4,p5);
 					}
-					else if(p4!=NULL)
+					else 
+						if(p4!=NULL)
 					{
-						Serial.println(4);
+						//Serial.println(4);
 						execute(current->userFunctionAddr4,p1,p2,p3,p4);
 					}
-					else if(p3!=NULL)
+					else 
+						if(p3!=NULL)
 					{
-						Serial.println(3);
+						//Serial.println(3);
 						execute(current->userFunctionAddr3,p1,p2,p3);
 					}
-					else if(p2!=NULL)
+					else */
+						if(p2!=NULL)
 					{
-						Serial.println(2);
+						//Serial.println(2);
+  		Serial.println("c");
 						execute(current->userFunctionAddr2,p1,p2);
+  		Serial.println("d");
 					}
 					else if(p1!=NULL)
 					{
-						Serial.println(1);
+						//Serial.println(1);
 						execute(current->userFunctionAddr1,p1);
 					}
 					else
 					{
-						Serial.println(0);
+						//Serial.println(0);
 						execute(current->userFunctionAddr0);
 					}
+  		Serial.println("3");
 					//execute(current->userFunctionAddr);
 					break;
 				}
 				current = current->next;
 			}
-			free(p1);free(p2);free(p3);free(p4);free(p5);
-			p1=p2=p3=p4=p5=NULL;
 		}
+  		Serial.println("4");
+			//free(p1);free(p2);free(p3);free(p4);free(p5);
+			//p1=p2=p3=p4=p5=NULL;
+			free(p1);free(p2);
+			p1=p2=NULL;
+
+			functionName = NULL;
 		
 			int len=strlen(_revCtrlResult)+strlen(_revCtrlMsg)+63;
 			//Serial.println(len);
@@ -340,7 +351,8 @@ void LeweiTcpClient::getResponse()
 		Serial.println("response to server.");
 		
 		setRevCtrlMsg("false","function not binded");
-		_clientStr = "";
+		_clientStr = NULL;
+		
 	}
 }
 
@@ -434,13 +446,30 @@ void LeweiTcpClient::sendSensorValue(String sensorName,String sensorValue)
 	//Serial.println(tcpServer);
 	if (_clientRevCtrl.connected())
 	{
-		Serial.println("sending data...");
-		//delay(800);
+		Serial.println("sending data111");		
 		
+		/*
+			int len=sensorName.length()+sensorValue.length()+57;
+			//Serial.println(len);
+			commandString=(char *)malloc(len);	
+			snprintf(commandString, len, "{\"method\": \"upload\", \"data\":[{\"Name\":\"%s\",\"Value\":%s\"\"}]}&^!", sensorName, sensorValue);
+			Serial.println(commandString);
+			//_clientRevCtrl.print(commandString);
+			free(commandString);
+			commandString = NULL;
+			*/
+			
 		
-		String connStr = "{\"method\": \"upload\", \"data\":[{\"Name\":\""+sensorName+"\",\"Value\":\""+sensorValue+"\"}]}&^!";
-		
-		Serial.println(connStr);
+		checkFreeMem();
+		String connStr = "{\"method\": \"upload\", \"data\":[{\"Name\":\"";
+		connStr+=sensorName;
+		connStr+="\",\"Value\":\"";
+		connStr+=sensorValue;
+		connStr+="\"}]}&^!";
+		//String connStr = "\"method\": \"upload\", \"data\":[{\"Name\":\"\",\"Value\":\"\"}]}&^!";
+		Serial.print("connStr.length():");	
+		Serial.println(connStr.length());	
+		checkFreeMem();
 		char* c = (char*)malloc(connStr.length()+1);
 		if(c)
 		{
@@ -449,7 +478,13 @@ void LeweiTcpClient::sendSensorValue(String sensorName,String sensorValue)
 			free(c);
 			c = NULL;
 		}
-		connStr = "";
+		else
+		{
+			Serial.println("sendSensorValue::malloc failed");
+		}
+		connStr = NULL;
+		
+		checkFreeMem();
 		
 	}
 	else 
@@ -499,6 +534,22 @@ void LeweiTcpClient::sendSensorValue(String sensorName,String sensorValue)
 	
 }
 
+void LeweiTcpClient::checkFreeMem()
+{
+		for(int i = 1024;i>0;i--)
+		{
+			char* c = (char*)malloc(i);
+			if(c)
+			{
+				free(c);
+				c=NULL;
+				Serial.print("M:");
+				Serial.println(i);
+				break;
+			}
+		}
+}
+
 void LeweiTcpClient::sendSensorValue(String sensorName,int sensorValue)
 {
 	sendSensorValue(sensorName,String(sensorValue));
@@ -535,6 +586,8 @@ void LeweiTcpClient::execute(void (*callfuct)(char*,char*),char* p1,char* p2)
 {
     callfuct(p1,p2);
 }
+
+/*
 void LeweiTcpClient::execute(void (*callfuct)(char*,char*,char*),char* p1,char* p2,char* p3)
 {
     callfuct(p1,p2,p3);
@@ -548,6 +601,7 @@ void LeweiTcpClient::execute(void (*callfuct)(char*,char*,char*,char*,char*),cha
 {
     callfuct(p1,p2,p3,p4,p5);
 }
+*/
 
 
 void LeweiTcpClient::addUserFunction(UserFunction &uFunction)
@@ -555,23 +609,26 @@ void LeweiTcpClient::addUserFunction(UserFunction &uFunction)
 	UserFunctionNode *n1,*n2;
 	n2 = (UserFunctionNode*) new(UserFunctionNode);
 	
-	
+	/*
 	if(uFunction.userFunctionAddr5!=NULL)
 	{
 		//Serial.println("reg addr5.");
 		n2->userFunctionAddr5 = uFunction.userFunctionAddr5;
 	}
-	else if(uFunction.userFunctionAddr4!=NULL)
+	else 
+		if(uFunction.userFunctionAddr4!=NULL)
 	{
 		//Serial.println("reg addr4.");
 		n2->userFunctionAddr4 = uFunction.userFunctionAddr4;
 	}
-	else if(uFunction.userFunctionAddr3!=NULL)
+	else 
+		if(uFunction.userFunctionAddr3!=NULL)
 	{
 		//Serial.println("reg addr3.");
 		n2->userFunctionAddr3 = uFunction.userFunctionAddr3;
 	}
-	else if(uFunction.userFunctionAddr2!=NULL)
+	else */
+		if(uFunction.userFunctionAddr2!=NULL)
 	{
 		//Serial.println("reg addr2.");
 		n2->userFunctionAddr2 = uFunction.userFunctionAddr2;

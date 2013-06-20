@@ -34,14 +34,14 @@ void setup()
   client->addUserFunction(uf1);
   UserFunction uf2 (test2,"testFunction2");
   client->addUserFunction(uf2);
-  UserFunction uf3 (test3,"testFunction3");
-  client->addUserFunction(uf3);
+//  UserFunction uf3 (test3,"testFunction3");
+//  client->addUserFunction(uf3);
 //  UserFunction uf4 (test4,"testFunction4");
 //  client->addUserFunction(uf4);
 //  UserFunction uf5 (test5,"testFunction5");
 //  client->addUserFunction(uf5);
-//  UserFunction uf6 (test6,"getAllSensors");
-//  client->addUserFunction(uf6);
+  UserFunction uf6 (test6,"getAllSensors");
+  client->addUserFunction(uf6);
   
 }
 
