@@ -151,8 +151,8 @@ char* LeweiTcpClient::strToChar(String str)
 	char* c = (char*)malloc(str.length()+1);
 	if(!c)
 	{
-		Serial.print("strToChar::");
-		Serial.println(str);
+		//Serial.print("strToChar::");
+		//Serial.println(str);
 		Serial.println("strToChar::malloc failed");
 		return NULL;
 	}
@@ -233,7 +233,7 @@ void LeweiTcpClient::getResponse()
 		//char* retMessage = "function not binded";
 		Serial.print("message from server:");
 		Serial.println(_clientStr);
-		checkFreeMem();
+		//checkFreeMem();
 		String functionName = getParaValueStr(_clientStr,"f");
 			char* p1 = getParaValue(_clientStr,"p1");
 			char* p2 = getParaValue(_clientStr,"p2");
@@ -241,13 +241,13 @@ void LeweiTcpClient::getResponse()
 			//char* p4 = getParaValue(_clientStr,"p4");
 			//char* p5 = getParaValue(_clientStr,"p5");
 			_clientStr = NULL;
-		checkFreeMem();
+		//checkFreeMem();
 		if(!functionName.equals(""))//here comes user defined command
 		{
-  		Serial.println("functionName is:");
-		checkFreeMem();
-			Serial.println(functionName);
-		checkFreeMem();
+  		//Serial.println("functionName is:");
+		//checkFreeMem();
+			//Serial.println(functionName);
+		//checkFreeMem();
 			//countUserFunction();
 			UserFunctionNode * current = head;
 			while(current!=NULL)
@@ -256,11 +256,8 @@ void LeweiTcpClient::getResponse()
 //				Serial.println(current->userFunctionName);
 				if(functionName.equals(current->userFunctionName))
 				{
-		checkFreeMem();
-		Serial.flush();
-  		Serial.println("a");
+		//checkFreeMem();
 					//setRevCtrlMsg("true","execute function");
-  		Serial.println("b");
 					/*
 					if(p5!=NULL)
 					{
@@ -283,9 +280,7 @@ void LeweiTcpClient::getResponse()
 						if(p2!=NULL)
 					{
 						//Serial.println(2);
-  		Serial.println("c");
 						execute(current->userFunctionAddr2,p1,p2);
-  		Serial.println("d");
 					}
 					else if(p1!=NULL)
 					{
@@ -297,14 +292,12 @@ void LeweiTcpClient::getResponse()
 						//Serial.println(0);
 						execute(current->userFunctionAddr0);
 					}
-  		Serial.println("3");
 					//execute(current->userFunctionAddr);
 					break;
 				}
 				current = current->next;
 			}
 		}
-  		Serial.println("4");
 			//free(p1);free(p2);free(p3);free(p4);free(p5);
 			//p1=p2=p3=p4=p5=NULL;
 			free(p1);free(p2);
@@ -426,7 +419,7 @@ void LeweiTcpClient::connentTcpServer()
 		// if you didn't get a connection to the server:
 		
 		Serial.println("connect failed");
-		Serial.println(_clientRevCtrl.status());
+		//Serial.println(_clientRevCtrl.status());
 	}
 	bIsConnecting = false;
 }
@@ -446,7 +439,7 @@ void LeweiTcpClient::sendSensorValue(String sensorName,String sensorValue)
 	//Serial.println(tcpServer);
 	if (_clientRevCtrl.connected())
 	{
-		Serial.println("sending data111");		
+		Serial.println("sending data...");		
 		
 		/*
 			int len=sensorName.length()+sensorValue.length()+57;
@@ -467,9 +460,9 @@ void LeweiTcpClient::sendSensorValue(String sensorName,String sensorValue)
 		connStr+=sensorValue;
 		connStr+="\"}]}&^!";
 		//String connStr = "\"method\": \"upload\", \"data\":[{\"Name\":\"\",\"Value\":\"\"}]}&^!";
-		Serial.print("connStr.length():");	
-		Serial.println(connStr.length());	
-		checkFreeMem();
+		//Serial.print("connStr.length():");	
+		//Serial.println(connStr.length());	
+		//checkFreeMem();
 		char* c = (char*)malloc(connStr.length()+1);
 		if(c)
 		{
@@ -543,7 +536,7 @@ void LeweiTcpClient::checkFreeMem()
 			{
 				free(c);
 				c=NULL;
-				Serial.print("M:");
+				Serial.print("FreeMem:");
 				Serial.println(i);
 				break;
 			}
@@ -575,7 +568,7 @@ void LeweiTcpClient::sendSensorValue(String sensorName,double sensorValue)
 
 void LeweiTcpClient::execute(void (*callfuct)())
 {
-	Serial.println("exec no para");
+	//Serial.println("exec no para");
     callfuct();
 }
 void LeweiTcpClient::execute(void (*callfuct)(char*),char* p1)
