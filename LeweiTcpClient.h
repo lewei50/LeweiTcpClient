@@ -1,8 +1,7 @@
 #ifndef LeweiTcpClient_h
 #define LeweiTcpClient_h
-
-#include <Ethernet.h>
-
+#include <Arduino.h>
+#include <WString.h>
 
 /*
 LeweiTcpClient.h Library for tcp.lewei50.com to reverse control and upload data
@@ -50,20 +49,15 @@ class LeweiTcpClient
 {
 	UserFunctionNode*head;
 	public:
-		char tcpServer[16];
-		char uploadServer[17];
 		char * aliveString;
 		char * commandString;
-		boolean bIsConnecting;
 		LeweiTcpClient( const char *userKey,const char *gatewayNo);
-		LeweiTcpClient( const char *userKey,const char *gatewayNo,byte mac[]);
-		LeweiTcpClient( const char *userKey,const char *gatewayNo,byte mac[],IPAddress ip,IPAddress dns,IPAddress gw,IPAddress subnet);
 		void keepOnline();
 		void sendSensorValue(String sensorName,String sensorValue);
 		void sendSensorValue(String sensorName,int sensorValue);
 		void sendSensorValue(String sensorName,float sensorValue);
 		void sendSensorValue(String sensorName,double sensorValue);
-		void connentTcpServer();
+		//void connentTcpServer();
 		void execute(void (*callfuct)());
 		void execute(void (*callfuct)(char*),char* p1);
 		void execute(void (*callfuct)(char*,char*),char* p1,char* p2);
@@ -74,22 +68,14 @@ class LeweiTcpClient
 
 		void addUserFunction(UserFunction &uFunction);
 		void setRevCtrlMsg(char* execResult,char* msg);
-		void directResponse(String respStr);
 		char* strToChar(String str);
 
 	private:
 		const char *_userKey;
 		const char *_gatewayNo;
-		byte _mac[];
-		IPAddress _ip;
-		IPAddress _dns;
-		IPAddress _gw;
-		IPAddress _subnet;
 		String _clientStr;
 		long _starttime;
 		int _postInterval;
-		EthernetClient _clientRevCtrl;//connect to tcp.lewei50.com and keep alive
-		EthernetClient _clientUpload;//connect to open.lewei50.com and close
 		
 		void sendOnlineCommand();
 		void getResponse();
@@ -99,7 +85,6 @@ class LeweiTcpClient
 		
 		char* _revCtrlResult;
 		char* _revCtrlMsg;
-		void checkFreeMem();
 };
 
 #endif
