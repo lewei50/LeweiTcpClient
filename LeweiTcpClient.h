@@ -77,6 +77,9 @@ class LeweiTcpClient
 		long _starttime;
 		int _postInterval;
 		
+		int _recieveTimeout ;
+		long _recieveStartTime;
+		
 		void sendOnlineCommand();
 		void getResponse();
 		void setupDefaultValue();
