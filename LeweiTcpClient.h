@@ -104,7 +104,7 @@ class LeweiTcpClient
 		void checkFreeMem();
 		
 		boolean _bEasyMode;
-		void writeRom(int startPos,String value);
+		void writeRom(String value);
 		void readRom();
 		void listenServer();
 
