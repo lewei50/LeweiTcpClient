@@ -30,7 +30,7 @@ void setup()
   //we test transfer 1-5 para from website(you defined on it) to your arduino
   //enjoy it
   
-	UserFunction uf1(test1,"testFunction");
+  UserFunction uf1(test1,"testFunction");
   client->addUserFunction(uf1);
   UserFunction uf2 (test2,"testFunction2");
   client->addUserFunction(uf2);
@@ -42,6 +42,16 @@ void setup()
 //  client->addUserFunction(uf5);
   UserFunction uf6 (test6,"getAllSensors");
   client->addUserFunction(uf6);
+  
+  
+  //enable easySetupMode will open the port 80 of this board,
+  //you can setup your apikey and gateway number via http://your_arduino_ip/
+  //the key and number will be burned into board's eeprom
+  //after set you need to restart your arduino.
+  //after setup,you can comment this line for fasten your board.
+  //this library will will use apikey and gateway number in eeprom FIRST,if it exsit.
+  //you can send empty value from the browser to wipe the data in eeprom.
+  client->easySetupMode(true);
   
 }
 
@@ -99,7 +109,6 @@ void test6()
   Serial.println("test function recall6");
   
   //client->directResponse("{\"method\":\"response\",\"result\":{\"successful\":true,\"message\":null,\"data\":[{\"id\":\"1\",\"type\":\"jdq\",\"name\":\"s1\",\"value\":\"1\",\"status\":\"ok\"},{\"id\":\"2\",\"type\":\"jdq\",\"name\":\"s2\",\"value\":\"1\",\"status\":\"ok\"}]}}");
-  //String msg = "{\"successful\":true,\"message\":null,\"data\":[{\"id\":\"1\",\"type\":\"jdq\",\"name\":\"s1\",\"value\":\"1\",\"status\":\"ok\"},{\"id\":\"2\",\"type\":\"jdq\",\"name\":\"s2\",\"value\":\"1\",\"status\":\"ok\"},{\"id\":\"3\",\"type\":\"jdq\",\"name\":\"s3\",\"value\":\"0\",\"status\":\"ok\"}]}";
   char* msg ="test";
   client->setRevCtrlMsg("true",msg);
 }
