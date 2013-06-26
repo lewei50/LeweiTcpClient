@@ -8,10 +8,10 @@ byte mac[] = {0x74,0x69,0x69,0x2D,0x30,0x31};
 #define LW_USERKEY "yourapikey"
 #define LW_GATEWAY "01"
 
-IPAddress ip(192,168,1, 15);
-IPAddress mydns(8,8,8,8);
-IPAddress gw(192,168,1,1);
-IPAddress subnet(255,255,255,0);
+//IPAddress ip(192,168,1, 15);
+//IPAddress mydns(8,8,8,8);
+//IPAddress gw(192,168,1,1);
+//IPAddress subnet(255,255,255,0);
  
 LeweiTcpClient *client;
 void setup()
@@ -34,8 +34,8 @@ void setup()
   
   UserFunction uf1(test1,"testFunction");
   client->addUserFunction(uf1);
-  UserFunction uf2 (test2,"testFunction2");
-  client->addUserFunction(uf2);
+//  UserFunction uf2 (test2,"testFunction2");
+//  client->addUserFunction(uf2);
 //  UserFunction uf3 (test3,"testFunction3");
 //  client->addUserFunction(uf3);
 //  UserFunction uf4 (test4,"testFunction4");
