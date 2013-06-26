@@ -213,7 +213,7 @@ void LeweiTcpClient::listenServer()
           
           //clientWeb.println("<!DOCTYPE HTML>");
           clientWeb.println("<html><body><form method=\"get\">");
-          clientWeb.println("Key<input type=\"text\" name=\"apiKey\">");
+          clientWeb.println("KEY<input type=\"text\" name=\"a\">GW<input type=\"text\" name=\"g\"><input type=\"submit\">");
           // output the value of each analog input pin
 //          for (int analogChannel = 0; analogChannel < 6; analogChannel++) {
 //            int sensorReading = analogRead(analogChannel);
@@ -235,7 +235,8 @@ void LeweiTcpClient::listenServer()
             //Serial.println(clientStr.substring(clientStr.indexOf(" /?apiKey=")+10,clientStr.indexOf(" HTTP/1.1")));
           }
           //Serial.println(clientStr);
-          clientStr = "";
+          clientStr = NULL;
+          checkFreeMem();
         } 
         else if (c != '\r') {
           // you've gotten a character on the current line
