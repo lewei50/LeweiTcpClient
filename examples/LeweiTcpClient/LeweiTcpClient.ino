@@ -1,6 +1,8 @@
 #include <SPI.h>
 #include <Ethernet.h>
 #include <LeweiTcpClient.h>
+#include <EEPROM.h>
+
 byte mac[] = {0x74,0x69,0x69,0x2D,0x30,0x31};
 
 #define LW_USERKEY "yourapikey"
