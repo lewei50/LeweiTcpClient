@@ -2,7 +2,7 @@
 #define LeweiTcpClient_h
 
 #include <Ethernet.h>
-
+#include <EEPROM.h>
 
 /*
 LeweiTcpClient.h Library for tcp.lewei50.com to reverse control and upload data
@@ -16,7 +16,7 @@ struct UserFunctionNode
 {
 	void (*userFunctionAddr0)();
 	void (*userFunctionAddr1)(char*);
-	void (*userFunctionAddr2)(char*,char*);
+	//void (*userFunctionAddr2)(char*,char*);
 	//void (*userFunctionAddr3)(char*,char*,char*);
 	//void (*userFunctionAddr4)(char*,char*,char*,char*);
 	//void (*userFunctionAddr5)(char*,char*,char*,char*,char*);
@@ -29,13 +29,13 @@ class UserFunction
 	public:
 		UserFunction(void (*callfuct)(),const char *userFunctionName);
 		UserFunction(void (*callfuct)(char*),const char *userFunctionName);
-		UserFunction(void (*callfuct)(char*,char*),const char *userFunctionName);
+		//UserFunction(void (*callfuct)(char*,char*),const char *userFunctionName);
 		//UserFunction(void (*callfuct)(char*,char*,char*),const char *userFunctionName);
 		//UserFunction(void (*callfuct)(char*,char*,char*,char*),const char *userFunctionName);
 		//UserFunction(void (*callfuct)(char*,char*,char*,char*,char*),const char *userFunctionName);
 		void (*userFunctionAddr0)();
 		void (*userFunctionAddr1)(char*);
-		void (*userFunctionAddr2)(char*,char*);
+		//void (*userFunctionAddr2)(char*,char*);
 		//void (*userFunctionAddr3)(char*,char*,char*);
 		//void (*userFunctionAddr4)(char*,char*,char*,char*);
 		//void (*userFunctionAddr5)(char*,char*,char*,char*,char*);
@@ -56,7 +56,7 @@ class LeweiTcpClient
 		char * commandString;
 		boolean bIsConnecting;
 		LeweiTcpClient( const char *userKey,const char *gatewayNo);
-		LeweiTcpClient( const char *userKey,const char *gatewayNo,byte mac[]);
+		//LeweiTcpClient( const char *userKey,const char *gatewayNo,byte mac[]);
 		LeweiTcpClient( const char *userKey,const char *gatewayNo,byte mac[],IPAddress ip,IPAddress dns,IPAddress gw,IPAddress subnet);
 		void keepOnline();
 		void sendSensorValue(String sensorName,String sensorValue);
@@ -66,7 +66,7 @@ class LeweiTcpClient
 		void connentTcpServer();
 		void execute(void (*callfuct)());
 		void execute(void (*callfuct)(char*),char* p1);
-		void execute(void (*callfuct)(char*,char*),char* p1,char* p2);
+		//void execute(void (*callfuct)(char*,char*),char* p1,char* p2);
 		//void execute(void (*callfuct)(char*,char*,char*),char* p1,char* p2,char* p3);
 		//void execute(void (*callfuct)(char*,char*,char*,char*),char* p1,char* p2,char* p3,char* p4);
 		//void execute(void (*callfuct)(char*,char*,char*,char*,char*),char* p1,char* p2,char* p3,char* p4,char* p5);
@@ -76,6 +76,8 @@ class LeweiTcpClient
 		void setRevCtrlMsg(char* execResult,char* msg);
 		void directResponse(String respStr);
 		char* strToChar(String str);
+		
+		void easySetupMode(boolean bEasyMode);
 
 	private:
 		const char *_userKey;
@@ -100,6 +102,13 @@ class LeweiTcpClient
 		char* _revCtrlResult;
 		char* _revCtrlMsg;
 		void checkFreeMem();
+		
+		boolean _bEasyMode;
+		void writeRom(int startPos,String value);
+		void readRom();
+		void listenServer();
+
+		EthernetServer server;
 };
 
 #endif
