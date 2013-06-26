@@ -43,6 +43,14 @@ void setup()
   UserFunction uf6 (test6,"getAllSensors");
   client->addUserFunction(uf6);
   
+  
+  //enable easySetupMode will open the port 80 of this board,
+  //you can setup your apikey and gateway number via http://your_arduino_ip/
+  //the key and number will be burned into board's eeprom
+  //after set you need to restart your arduino.
+  //after setup,you can comment this line for fasten your board.
+  client->easySetupMode(true);
+  
 }
 
 void loop()
@@ -99,7 +107,6 @@ void test6()
   Serial.println("test function recall6");
   
   //client->directResponse("{\"method\":\"response\",\"result\":{\"successful\":true,\"message\":null,\"data\":[{\"id\":\"1\",\"type\":\"jdq\",\"name\":\"s1\",\"value\":\"1\",\"status\":\"ok\"},{\"id\":\"2\",\"type\":\"jdq\",\"name\":\"s2\",\"value\":\"1\",\"status\":\"ok\"}]}}");
-  //String msg = "{\"successful\":true,\"message\":null,\"data\":[{\"id\":\"1\",\"type\":\"jdq\",\"name\":\"s1\",\"value\":\"1\",\"status\":\"ok\"},{\"id\":\"2\",\"type\":\"jdq\",\"name\":\"s2\",\"value\":\"1\",\"status\":\"ok\"},{\"id\":\"3\",\"type\":\"jdq\",\"name\":\"s3\",\"value\":\"0\",\"status\":\"ok\"}]}";
   char* msg ="test";
   client->setRevCtrlMsg("true",msg);
 }
