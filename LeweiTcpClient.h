@@ -1,3 +1,7 @@
+/*
+Serial-wifi version,1.0,use for arduino uno(and others) attached with serial-wifi shield
+*/
+
 #ifndef LeweiTcpClient_h
 #define LeweiTcpClient_h
 #include <Arduino.h>
