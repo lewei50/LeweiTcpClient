@@ -1,6 +1,6 @@
-/×
-Version:normal version,1.0
-×/
+/*
+Normal version,1.0,use for arduino mega 2560 etc
+*/
 #ifndef LeweiTcpClient_h
 #define LeweiTcpClient_h
 
