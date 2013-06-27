@@ -155,7 +155,7 @@ void LeweiTcpClient::setupDefaultValue()
 	snprintf(aliveString, len, "{\"method\":\"update\",\"gatewayNo\":\"%s\",\"userkey\":\"%s\"}&^!", _gatewayNo, _userKey);
 	
 
-	setRevCtrlMsg("false","FunctionNotBind");
+	setRevCtrlMsg("false","FnNotBind");
 	
 	_bEasyMode = false;
 	
@@ -168,8 +168,8 @@ void LeweiTcpClient::easySetupMode(boolean bEasyMode)
 	if(_bEasyMode)
 	{
 		server.begin();
-	  Serial.print("Srv:");
-	  Serial.println(Ethernet.localIP());
+	  //Serial.print("srv:");
+	  //Serial.println(Ethernet.localIP());
 	}
 }
 
@@ -243,12 +243,12 @@ void LeweiTcpClient::listenServer()
         // character) and the line is blank, the http request has ended,
         // so you can send a reply
         if (c == '\n' && currentLineIsBlank) {
-          clientWeb.println("<html><body><form method=\"get\">");
-          clientWeb.print("KEY<input type=\"text\" name=\"a\" value=\"");
+          clientWeb.println("<html><body><form method='get'>");
+          clientWeb.print("KEY<input type='text' name='a' value='");
           clientWeb.print(_userKey);
-          clientWeb.print("\">GW<input type=\"text\" name=\"g\" value=\"");
+          clientWeb.print("'>GW<input type='text' name='g' value='");
           clientWeb.print(_gatewayNo);
-          clientWeb.println("\"><input type=\"submit\">");
+          clientWeb.println("'><input type='submit'>");
           clientWeb.println("</form></body></html>");
           break;
         }
@@ -457,7 +457,7 @@ void LeweiTcpClient::getResponse()
 		
 		//Serial.println("response to server.");
 		
-		setRevCtrlMsg("false","FunctionNotBind");
+		setRevCtrlMsg("false","FnNotBind");
 		_clientStr = NULL;
 		
 	}
