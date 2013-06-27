@@ -1,3 +1,7 @@
+/*
+lite version,1.0,use for arduino uno with EasySetupMode
+*/
+
 #ifndef LeweiTcpClient_h
 #define LeweiTcpClient_h
 
