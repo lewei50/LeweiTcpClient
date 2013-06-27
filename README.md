@@ -22,7 +22,7 @@ Also you can taste the normal version for your serial-wifi shield here:
 
 https://github.com/lewei50/LeweiTcpClient/
 
-the version can only accept 0/1/2 parameter(s) from the website you defined on it.
+This version can only accept 0/1/2 parameter(s) from the website you defined on it.
 the normal version can accecpt 0/1/2/3/4/5 parameter(s).
 Enjoy it~
 
