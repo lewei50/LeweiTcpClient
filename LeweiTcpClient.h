@@ -54,8 +54,8 @@ class LeweiTcpClient
 {
 	UserFunctionNode*head;
 	public:
-		char tcpServer[16];
-		char uploadServer[17];
+		char* tcpServer;
+		//char uploadServer[17];
 		char * aliveString;
 		char * commandString;
 		boolean bIsConnecting;
@@ -95,7 +95,7 @@ class LeweiTcpClient
 		long _starttime;
 		int _postInterval;
 		EthernetClient _clientRevCtrl;//connect to tcp.lewei50.com and keep alive
-		EthernetClient _clientUpload;//connect to open.lewei50.com and close
+		//EthernetClient _clientUpload;//connect to open.lewei50.com and close
 		
 		void sendOnlineCommand();
 		void getResponse();

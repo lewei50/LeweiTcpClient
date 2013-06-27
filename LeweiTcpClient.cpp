@@ -72,10 +72,14 @@ UserFunction::UserFunction(void (*callfuct)(char*,char*,char*,char*,char*),const
 */
 
 
-LeweiTcpClient::LeweiTcpClient(const char *userKey,const char *gatewayNo):server(EthernetServer(80))
+LeweiTcpClient::LeweiTcpClient(const char *userKey,const char *gatewayNo):
+	server(EthernetServer(80)),
+	_userKey(userKey),
+	_gatewayNo(gatewayNo),
+	tcpServer("tcp.lewei50.com")
 {
-	_userKey = userKey;
-	_gatewayNo = gatewayNo;
+	//_userKey = userKey;
+	//_gatewayNo = gatewayNo;
 	setupDefaultValue();
 	//IPAddress tcpServer(42,121,128,216); //tcp.lewei50.com's ip
 	//IPAddress uploadServer(42,121,128,216);// "open.lewei50.com";
@@ -107,10 +111,14 @@ LeweiTcpClient::LeweiTcpClient(const char *userKey,const char *gatewayNo,byte ma
 }
 */
 
-LeweiTcpClient::LeweiTcpClient( const char *userKey,const char *gatewayNo,byte mac[],IPAddress ip,IPAddress dns,IPAddress gw,IPAddress subnet):server(EthernetServer(80))
+LeweiTcpClient::LeweiTcpClient( const char *userKey,const char *gatewayNo,byte mac[],IPAddress ip,IPAddress dns,IPAddress gw,IPAddress subnet):
+	server(EthernetServer(80)),
+	_userKey(userKey),
+	_gatewayNo(gatewayNo),
+	tcpServer("tcp.lewei50.com")
 {
-	_userKey = userKey;
-	_gatewayNo = gatewayNo;
+	//_userKey = userKey;
+	//_gatewayNo = gatewayNo;
 	setupDefaultValue();
 	Ethernet.begin(mac,ip,dns,gw,subnet);
 	Serial.println(Ethernet.localIP());
@@ -131,12 +139,12 @@ void LeweiTcpClient::setupDefaultValue()
 	byte _mac[] = {0x74, 0x69, 0x69, 0x2D, 0x30, 0x31};
 	_postInterval = 60000;//server setting is 60000
 	_starttime = millis();
-	String tcpServerStr = "tcp.lewei50.com";
-	tcpServerStr.toCharArray(tcpServer,16);
-	tcpServerStr = NULL;
-	String uploadServerStr = "open.lewei50.com";
-	uploadServerStr.toCharArray(uploadServer,17);
-	uploadServerStr = NULL;
+	//String tcpServerStr = "tcp.lewei50.com";
+	//tcpServerStr.toCharArray(tcpServer,16);
+	//tcpServerStr = NULL;
+	//String uploadServerStr = "open.lewei50.com";
+	//uploadServerStr.toCharArray(uploadServer,17);
+	//uploadServerStr = NULL;
 	bIsConnecting = false;
 	
 	int len=strlen(_gatewayNo)+32+51;//api-key length:32
@@ -147,7 +155,7 @@ void LeweiTcpClient::setupDefaultValue()
 	snprintf(aliveString, len, "{\"method\":\"update\",\"gatewayNo\":\"%s\",\"userkey\":\"%s\"}&^!", _gatewayNo, _userKey);
 	
 
-	setRevCtrlMsg("false","function not binded");
+	setRevCtrlMsg("false","FunctionNotBind");
 	
 	_bEasyMode = false;
 	
@@ -282,7 +290,7 @@ char* LeweiTcpClient::strToChar(String str)
 	{
 		//Serial.print("strToChar::");
 		//Serial.println(str);
-		Serial.println(":mallocFail");
+		Serial.println("malloc:F");
 		return NULL;
 	}
 	str.toCharArray(c,str.length()+1);
@@ -345,7 +353,7 @@ void LeweiTcpClient::getResponse()
 			//char* p4 = getParaValue(_clientStr,"p4");
 			//char* p5 = getParaValue(_clientStr,"p5");
 			_clientStr = NULL;
-		//checkFreeMem();
+		checkFreeMem();
 		if(!functionName.equals(""))//here comes user defined command
 		{
   		//Serial.print("f:");
@@ -449,7 +457,7 @@ void LeweiTcpClient::getResponse()
 		
 		//Serial.println("response to server.");
 		
-		setRevCtrlMsg("false","function not binded");
+		setRevCtrlMsg("false","FunctionNotBind");
 		_clientStr = NULL;
 		
 	}
@@ -500,12 +508,12 @@ void LeweiTcpClient::directResponse(String respStr)
 void LeweiTcpClient::connentTcpServer()
 {
 	bIsConnecting = true;
-	Serial.print("connect.");
+	Serial.print("Connect");
 	
 	_clientRevCtrl.stop();
 	if (_clientRevCtrl.connect(tcpServer, 9960))
 	{
-		Serial.println(".ed");
+		Serial.println("ed");
 		//delay(800);
 		sendOnlineCommand();
 		/*
@@ -524,7 +532,7 @@ void LeweiTcpClient::connentTcpServer()
 		_clientRevCtrl.stop();
 		// if you didn't get a connection to the server:
 		
-		Serial.println(".fail");
+		Serial.println("Fail");
 		//Serial.println(_clientRevCtrl.status());
 	}
 	bIsConnecting = false;
@@ -580,7 +588,7 @@ void LeweiTcpClient::sendSensorValue(String sensorName,String sensorValue)
 		}
 		else
 		{
-			Serial.println(":malloc failed");
+			Serial.println("malloc:F");
 		}
 		connStr = NULL;
 		
@@ -592,7 +600,7 @@ void LeweiTcpClient::sendSensorValue(String sensorName,String sensorValue)
 		//_clientRevCtrl.stop();
 		// if you didn't get a connection to the server:
 		
-		Serial.println("Send fail");
+		Serial.println("SendFail");
 	}
 	
 	
