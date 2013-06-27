@@ -25,7 +25,7 @@ If you are using arduino mega or something else you can try the normal version h
 
 https://github.com/lewei50/LeweiTcpClient/
 
-the lite version can only accept 0/1/2 parameter(s) from the website you defined on it.
+the lite version can only accept 0/1 parameter(s) from the website you defined on it.
 the normal version can accecpt 0/1/2/3/4/5 parameter(s).
 Enjoy it~
 
