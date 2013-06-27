@@ -139,7 +139,7 @@ void LeweiTcpClient::setupDefaultValue()
 	uploadServerStr = NULL;
 	bIsConnecting = false;
 	
-	int len=strlen(_gatewayNo)+strlen(_userKey)+51;
+	int len=strlen(_gatewayNo)+32+51;//api-key length:32
 	
 	readRom();
 	
@@ -292,6 +292,7 @@ char* LeweiTcpClient::strToChar(String str)
 void LeweiTcpClient::sendOnlineCommand()
 {
 		_clientRevCtrl.print(aliveString);
+		//Serial.println(aliveString);
 }
 
 void LeweiTcpClient::keepOnline()
