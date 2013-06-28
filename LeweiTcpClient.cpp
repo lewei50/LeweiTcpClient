@@ -145,7 +145,7 @@ void LeweiTcpClient::setupDefaultValue()
 	//String uploadServerStr = "open.lewei50.com";
 	//uploadServerStr.toCharArray(uploadServer,17);
 	//uploadServerStr = NULL;
-	bIsConnecting = false;
+	//bIsConnecting = false;
 	
 	int len=strlen(_gatewayNo)+32+51;//api-key length:32
 	
@@ -155,7 +155,7 @@ void LeweiTcpClient::setupDefaultValue()
 	snprintf(aliveString, len, "{\"method\":\"update\",\"gatewayNo\":\"%s\",\"userkey\":\"%s\"}&^!", _gatewayNo, _userKey);
 	
 
-	setRevCtrlMsg("false","FnNotBind");
+	setRevCtrlMsg("false","NotBind");
 	
 	_bEasyMode = false;
 	
@@ -321,10 +321,10 @@ void LeweiTcpClient::keepOnline()
 		}
 		else
 		{
-			if(!bIsConnecting)
-			{
+			//if(!bIsConnecting)
+			//{
 				connentTcpServer();
-			}
+			//}
 		}
 }
 
@@ -338,8 +338,8 @@ void LeweiTcpClient::getResponse()
 	else if(_clientStr.length()>0)
 	{
 		//char* retMessage = "function not binded";
-		Serial.print("FrmSrv:");
-		Serial.println(_clientStr);
+		//Serial.print("FrmSrv:");
+		//Serial.println(_clientStr);
 		//if(_clientStr.indexOf("&^!")<0)
 		//{
 			//Serial.println("no end!");
@@ -457,7 +457,7 @@ void LeweiTcpClient::getResponse()
 		
 		//Serial.println("response to server.");
 		
-		setRevCtrlMsg("false","FnNotBind");
+		setRevCtrlMsg("false","NotBind");
 		_clientStr = NULL;
 		
 	}
@@ -490,7 +490,7 @@ String LeweiTcpClient::getParaValueStr(String &orig,String paraName)
 		
 		return functionName;
 }
-
+/*
 void LeweiTcpClient::directResponse(String respStr)
 {
 	if(_clientRevCtrl.connected())
@@ -504,10 +504,10 @@ void LeweiTcpClient::directResponse(String respStr)
 		c = NULL;
 	}
 }
-
+*/
 void LeweiTcpClient::connentTcpServer()
 {
-	bIsConnecting = true;
+	//bIsConnecting = true;
 	Serial.print("Connect");
 	
 	_clientRevCtrl.stop();
@@ -535,7 +535,7 @@ void LeweiTcpClient::connentTcpServer()
 		Serial.println("Fail");
 		//Serial.println(_clientRevCtrl.status());
 	}
-	bIsConnecting = false;
+	//bIsConnecting = false;
 }
 
 void LeweiTcpClient::setRevCtrlMsg(char* execResult,char* msg)
@@ -644,7 +644,7 @@ void LeweiTcpClient::sendSensorValue(String sensorName,String sensorValue)
 
 void LeweiTcpClient::checkFreeMem()
 {
-		for(int i = 1024;i>0;i--)
+		for(int i = 512;i>0;i--)
 		{
 			char* c = (char*)malloc(i);
 			if(c)
