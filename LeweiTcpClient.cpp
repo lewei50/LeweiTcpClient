@@ -145,7 +145,7 @@ void LeweiTcpClient::setupDefaultValue()
 	//String uploadServerStr = "open.lewei50.com";
 	//uploadServerStr.toCharArray(uploadServer,17);
 	//uploadServerStr = NULL;
-	bIsConnecting = false;
+	//bIsConnecting = false;
 	
 	int len=strlen(_gatewayNo)+32+51;//api-key length:32
 	
@@ -321,10 +321,10 @@ void LeweiTcpClient::keepOnline()
 		}
 		else
 		{
-			if(!bIsConnecting)
-			{
+			//if(!bIsConnecting)
+			//{
 				connentTcpServer();
-			}
+			//}
 		}
 }
 
@@ -353,7 +353,7 @@ void LeweiTcpClient::getResponse()
 			//char* p4 = getParaValue(_clientStr,"p4");
 			//char* p5 = getParaValue(_clientStr,"p5");
 			_clientStr = NULL;
-		checkFreeMem();
+		//checkFreeMem();
 		if(!functionName.equals(""))//here comes user defined command
 		{
   		//Serial.print("f:");
@@ -507,7 +507,7 @@ void LeweiTcpClient::directResponse(String respStr)
 
 void LeweiTcpClient::connentTcpServer()
 {
-	bIsConnecting = true;
+	//bIsConnecting = true;
 	Serial.print("Connect");
 	
 	_clientRevCtrl.stop();
@@ -535,7 +535,7 @@ void LeweiTcpClient::connentTcpServer()
 		Serial.println("Fail");
 		//Serial.println(_clientRevCtrl.status());
 	}
-	bIsConnecting = false;
+	//bIsConnecting = false;
 }
 
 void LeweiTcpClient::setRevCtrlMsg(char* execResult,char* msg)
