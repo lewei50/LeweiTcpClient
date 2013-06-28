@@ -58,7 +58,7 @@ class LeweiTcpClient
 		//char uploadServer[17];
 		char * aliveString;
 		char * commandString;
-		//boolean bIsConnecting;
+		boolean bIsConnecting;
 		LeweiTcpClient( const char *userKey,const char *gatewayNo);
 		//LeweiTcpClient( const char *userKey,const char *gatewayNo,byte mac[]);
 		LeweiTcpClient( const char *userKey,const char *gatewayNo,byte mac[],IPAddress ip,IPAddress dns,IPAddress gw,IPAddress subnet);
