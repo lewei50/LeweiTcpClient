@@ -85,8 +85,8 @@ class LeweiTcpClient
 		void easySetupMode(boolean bEasyMode);
 
 	private:
-		const char *_userKey;
-		const char *_gatewayNo;
+		char *_userKey;
+		char *_gatewayNo;
 		byte _mac[];
 		//IPAddress _ip;
 		//IPAddress _dns;

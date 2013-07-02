@@ -74,10 +74,15 @@ UserFunction::UserFunction(void (*callfuct)(char*,char*,char*,char*,char*),const
 
 LeweiTcpClient::LeweiTcpClient(const char *userKey,const char *gatewayNo):
 	server(EthernetServer(80)),
-	_userKey(userKey),
-	_gatewayNo(gatewayNo),
+	//_userKey(userKey),
+	//_gatewayNo(gatewayNo),
 	tcpServer("tcp.lewei50.com")
 {
+	_userKey = (char*)malloc( strlen(userKey)+1 );
+	strcpy( _userKey,userKey );
+	
+	_gatewayNo = (char*)malloc( strlen(gatewayNo)+1 );
+	strcpy( _gatewayNo,gatewayNo );
 	//_userKey = userKey;
 	//_gatewayNo = gatewayNo;
 	setupDefaultValue();
@@ -113,10 +118,15 @@ LeweiTcpClient::LeweiTcpClient(const char *userKey,const char *gatewayNo,byte ma
 
 LeweiTcpClient::LeweiTcpClient( const char *userKey,const char *gatewayNo,byte mac[],IPAddress ip,IPAddress dns,IPAddress gw,IPAddress subnet):
 	server(EthernetServer(80)),
-	_userKey(userKey),
-	_gatewayNo(gatewayNo),
+	//_userKey(userKey),
+	//_gatewayNo(gatewayNo),
 	tcpServer("tcp.lewei50.com")
 {
+	_userKey = (char*)malloc( strlen(userKey)+1 );
+	strcpy( _userKey,userKey );
+	
+	_gatewayNo = (char*)malloc( strlen(gatewayNo)+1 );
+	strcpy( _gatewayNo,gatewayNo );
 	//_userKey = userKey;
 	//_gatewayNo = gatewayNo;
 	setupDefaultValue();
