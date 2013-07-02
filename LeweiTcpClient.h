@@ -1,11 +1,12 @@
 /*
-Normal version,1.0,use for arduino mega 2560 etc
+nomal version,1.0,use for arduino mega 2560 with EasySetupMode
 */
+
 #ifndef LeweiTcpClient_h
 #define LeweiTcpClient_h
 
 #include <Ethernet.h>
-
+#include <EEPROM.h>
 
 /*
 LeweiTcpClient.h Library for tcp.lewei50.com to reverse control and upload data
@@ -53,11 +54,11 @@ class LeweiTcpClient
 {
 	UserFunctionNode*head;
 	public:
-		char tcpServer[16];
-		char uploadServer[17];
+		char* tcpServer;
+		//char uploadServer[17];
 		char * aliveString;
 		char * commandString;
-		boolean bIsConnecting;
+		//boolean bIsConnecting;
 		LeweiTcpClient( const char *userKey,const char *gatewayNo);
 		LeweiTcpClient( const char *userKey,const char *gatewayNo,byte mac[]);
 		LeweiTcpClient( const char *userKey,const char *gatewayNo,byte mac[],IPAddress ip,IPAddress dns,IPAddress gw,IPAddress subnet);
@@ -77,22 +78,25 @@ class LeweiTcpClient
 
 		void addUserFunction(UserFunction &uFunction);
 		void setRevCtrlMsg(char* execResult,char* msg);
-		void directResponse(String respStr);
+		//void directResponse(String respStr);
 		char* strToChar(String str);
+		
+		void checkFreeMem();
+		void easySetupMode(boolean bEasyMode);
 
 	private:
 		const char *_userKey;
 		const char *_gatewayNo;
 		byte _mac[];
-		IPAddress _ip;
-		IPAddress _dns;
-		IPAddress _gw;
-		IPAddress _subnet;
+		//IPAddress _ip;
+		//IPAddress _dns;
+		//IPAddress _gw;
+		//IPAddress _subnet;
 		String _clientStr;
 		long _starttime;
 		int _postInterval;
 		EthernetClient _clientRevCtrl;//connect to tcp.lewei50.com and keep alive
-		EthernetClient _clientUpload;//connect to open.lewei50.com and close
+		//EthernetClient _clientUpload;//connect to open.lewei50.com and close
 		
 		void sendOnlineCommand();
 		void getResponse();
@@ -102,7 +106,13 @@ class LeweiTcpClient
 		
 		char* _revCtrlResult;
 		char* _revCtrlMsg;
-		void checkFreeMem();
+		
+		boolean _bEasyMode;
+		void writeRom(String value);
+		void readRom();
+		void listenServer();
+
+		EthernetServer server;
 };
 
 #endif
