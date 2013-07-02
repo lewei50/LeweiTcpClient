@@ -73,7 +73,7 @@ void functionIWrote(char * p1)
 void changeLedState(char* p1)
 {
   client->setRevCtrlMsg("true","changed");
-  if(String(p1)=="1")
+  if(String(p1)=="0")
   {
     digitalWrite(LED_PIN,HIGH);
     client->sendSensorValue("led3",1);
