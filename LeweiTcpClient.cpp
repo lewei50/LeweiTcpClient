@@ -147,7 +147,7 @@ void LeweiTcpClient::setupDefaultValue()
 	//char uploadServer[] = "open.lewei50.com";
 	
 	byte _mac[] = {0x74, 0x69, 0x69, 0x2D, 0x30, 0x31};
-	_postInterval = 60000;//server setting is 60000
+	_postInterval = 30000;//server setting is 60000
 	_starttime = millis();
 	//String tcpServerStr = "tcp.lewei50.com";
 	//tcpServerStr.toCharArray(tcpServer,16);
