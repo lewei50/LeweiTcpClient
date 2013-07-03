@@ -21,9 +21,9 @@ struct UserFunctionNode
 	void (*userFunctionAddr0)();
 	void (*userFunctionAddr1)(char*);
 	void (*userFunctionAddr2)(char*,char*);
-	void (*userFunctionAddr3)(char*,char*,char*);
-	void (*userFunctionAddr4)(char*,char*,char*,char*);
-	void (*userFunctionAddr5)(char*,char*,char*,char*,char*);
+	//void (*userFunctionAddr3)(char*,char*,char*);
+	//void (*userFunctionAddr4)(char*,char*,char*,char*);
+	//void (*userFunctionAddr5)(char*,char*,char*,char*,char*);
 	const char *userFunctionName;
 	UserFunctionNode*next;
 };
@@ -34,15 +34,15 @@ class UserFunction
 		UserFunction(void (*callfuct)(),const char *userFunctionName);
 		UserFunction(void (*callfuct)(char*),const char *userFunctionName);
 		UserFunction(void (*callfuct)(char*,char*),const char *userFunctionName);
-		UserFunction(void (*callfuct)(char*,char*,char*),const char *userFunctionName);
-		UserFunction(void (*callfuct)(char*,char*,char*,char*),const char *userFunctionName);
-		UserFunction(void (*callfuct)(char*,char*,char*,char*,char*),const char *userFunctionName);
+		//UserFunction(void (*callfuct)(char*,char*,char*),const char *userFunctionName);
+		//UserFunction(void (*callfuct)(char*,char*,char*,char*),const char *userFunctionName);
+		//UserFunction(void (*callfuct)(char*,char*,char*,char*,char*),const char *userFunctionName);
 		void (*userFunctionAddr0)();
 		void (*userFunctionAddr1)(char*);
 		void (*userFunctionAddr2)(char*,char*);
-		void (*userFunctionAddr3)(char*,char*,char*);
-		void (*userFunctionAddr4)(char*,char*,char*,char*);
-		void (*userFunctionAddr5)(char*,char*,char*,char*,char*);
+		//void (*userFunctionAddr3)(char*,char*,char*);
+		//void (*userFunctionAddr4)(char*,char*,char*,char*);
+		//void (*userFunctionAddr5)(char*,char*,char*,char*,char*);
 		const char *userFunctionName;
 	private:
 		UserFunction *next;
@@ -50,15 +50,38 @@ class UserFunction
 };
 
 
+struct UserSwitchNode
+{
+	void (*userSwitchOnFunctionAddr)();
+	void (*userSwitchOffFunctionAddr)();
+	const char *userSwitchId;
+	boolean userSwitchState;
+	UserSwitchNode*next;
+};
+
+class UserSwitch
+{
+	public:
+		UserSwitch(void (*uSwitchOnFunctionAddr)(),void (*uSwitchOffFunctionAddr)(),const char *uSwtichId,boolean uSwitchState);
+		void (*userSwitchOnFunctionAddr)();
+		void (*userSwitchOffFunctionAddr)();
+		const char *userSwitchId;
+		boolean userSwitchState;
+	private:
+		UserSwitch *next;
+		friend class LeweiTcpClient;
+};
+
+
 class LeweiTcpClient
 {
 	UserFunctionNode*head;
+	UserSwitchNode*switchHead;
+	
 	public:
 		char* tcpServer;
-		//char uploadServer[17];
 		char * aliveString;
 		char * commandString;
-		//boolean bIsConnecting;
 		LeweiTcpClient( const char *userKey,const char *gatewayNo);
 		//LeweiTcpClient( const char *userKey,const char *gatewayNo,byte mac[]);
 		LeweiTcpClient( const char *userKey,const char *gatewayNo,byte mac[],IPAddress ip,IPAddress dns,IPAddress gw,IPAddress subnet);
@@ -71,14 +94,19 @@ class LeweiTcpClient
 		void execute(void (*callfuct)());
 		void execute(void (*callfuct)(char*),char* p1);
 		void execute(void (*callfuct)(char*,char*),char* p1,char* p2);
-		void execute(void (*callfuct)(char*,char*,char*),char* p1,char* p2,char* p3);
-		void execute(void (*callfuct)(char*,char*,char*,char*),char* p1,char* p2,char* p3,char* p4);
-		void execute(void (*callfuct)(char*,char*,char*,char*,char*),char* p1,char* p2,char* p3,char* p4,char* p5);
+		//void execute(void (*callfuct)(char*,char*,char*),char* p1,char* p2,char* p3);
+		//void execute(void (*callfuct)(char*,char*,char*,char*),char* p1,char* p2,char* p3,char* p4);
+		//void execute(void (*callfuct)(char*,char*,char*,char*,char*),char* p1,char* p2,char* p3,char* p4,char* p5);
 
 
 		void addUserFunction(UserFunction &uFunction);
 		void setRevCtrlMsg(char* execResult,char* msg);
+		void setRevCtrlData(char* data);
 		//void directResponse(String respStr);
+		
+		
+		void addUserSwitch(UserSwitch &uSwitch);
+		
 		char* strToChar(String str);
 		
 		void checkFreeMem();
@@ -88,15 +116,10 @@ class LeweiTcpClient
 		char *_userKey;
 		char *_gatewayNo;
 		byte _mac[];
-		//IPAddress _ip;
-		//IPAddress _dns;
-		//IPAddress _gw;
-		//IPAddress _subnet;
 		String _clientStr;
 		long _starttime;
 		int _postInterval;
 		EthernetClient _clientRevCtrl;//connect to tcp.lewei50.com and keep alive
-		//EthernetClient _clientUpload;//connect to open.lewei50.com and close
 		
 		void sendOnlineCommand();
 		void getResponse();
@@ -106,6 +129,9 @@ class LeweiTcpClient
 		
 		char* _revCtrlResult;
 		char* _revCtrlMsg;
+		char* _revCtrlData;
+		
+		void sendUserSwitchState();
 		
 		boolean _bEasyMode;
 		void writeRom(String value);
