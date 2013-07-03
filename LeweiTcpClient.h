@@ -78,6 +78,7 @@ class LeweiTcpClient
 
 		void addUserFunction(UserFunction &uFunction);
 		void setRevCtrlMsg(char* execResult,char* msg);
+		void setRevCtrlData(char* data);
 		//void directResponse(String respStr);
 		char* strToChar(String str);
 		
@@ -106,6 +107,7 @@ class LeweiTcpClient
 		
 		char* _revCtrlResult;
 		char* _revCtrlMsg;
+		char* _revCtrlData;
 		
 		boolean _bEasyMode;
 		void writeRom(String value);

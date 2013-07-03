@@ -347,7 +347,6 @@ void LeweiTcpClient::getResponse()
 	}
 	else if(_clientStr.length()>0)
 	{
-		//char* retMessage = "function not binded";
 		//Serial.print("FrmSrv:");
 		//Serial.println(_clientStr);
 		//if(_clientStr.indexOf("&^!")<0)
@@ -428,11 +427,19 @@ void LeweiTcpClient::getResponse()
 			p1=NULL;
 
 			functionName = NULL;
-		
-			int len=strlen(_revCtrlResult)+strlen(_revCtrlMsg)+63;
-			//Serial.println(len);
-			commandString=(char *)malloc(len);	
-			snprintf(commandString, len, "{\"method\":\"response\",\"result\":{\"successful\":%s,\"message\":\"%s\"}}&^!", _revCtrlResult, _revCtrlMsg);
+			if(strlen(_revCtrlData)>0)
+			{
+				int len=strlen(_revCtrlResult)+strlen(_revCtrlMsg)+strlen(_revCtrlData)+71;
+				commandString=(char *)malloc(len);	
+				snprintf(commandString, len, "{\"method\":\"response\",\"result\":{\"successful\":%s,\"message\":\"%s\",\"data\":%s}}&^!", _revCtrlResult, _revCtrlMsg,_revCtrlData);
+				
+			}
+			else
+			{
+				int len=strlen(_revCtrlResult)+strlen(_revCtrlMsg)+63;
+				commandString=(char *)malloc(len);	
+				snprintf(commandString, len, "{\"method\":\"response\",\"result\":{\"successful\":%s,\"message\":\"%s\"}}&^!", _revCtrlResult, _revCtrlMsg);
+			}
 			//Serial.println(commandString);
 			_clientRevCtrl.print(commandString);
 			free(commandString);
@@ -468,6 +475,7 @@ void LeweiTcpClient::getResponse()
 		//Serial.println("response to server.");
 		
 		setRevCtrlMsg("false","NotBind");
+		setRevCtrlData("");
 		_clientStr = NULL;
 		
 	}
@@ -552,6 +560,11 @@ void LeweiTcpClient::setRevCtrlMsg(char* execResult,char* msg)
 {
 	_revCtrlResult = execResult;
 	_revCtrlMsg = msg;
+}
+
+void LeweiTcpClient::setRevCtrlData(char* data)
+{
+	_revCtrlData = data;
 }
 
 void LeweiTcpClient::sendSensorValue(String sensorName,String sensorValue)
