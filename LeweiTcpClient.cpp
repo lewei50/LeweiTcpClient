@@ -400,6 +400,9 @@ void LeweiTcpClient::getResponse()
 		//checkFreeMem();
 			if(functionName.equals("getAllSensors"))//try to return the switch status list to server
 			{
+				sendUserSwitchState();
+				return;
+				/*
 				UserSwitchNode *currentSwitch = switchHead;                    
 				boolean bFirstNode = true;
 				//{\"id\":\"m\",\"name\":\"m\",\"value\":\"0\",\"status\":\"ok\"}
@@ -430,6 +433,7 @@ void LeweiTcpClient::getResponse()
   				setRevCtrlData(msg);
   				msg = NULL;
 				}
+				*/
 				
 			}
 			else if(functionName.equals("updateSensor"))
@@ -442,12 +446,12 @@ void LeweiTcpClient::getResponse()
 					if(String(p1).equals(String(currentSwitch->userSwitchId)))
 					{
 				Serial.println(p2);
-						if(String(p2).equals("1"))
+						if(String(p2).equals("0"))
 						{
 								currentSwitch->userSwitchState = false;
 								execute(currentSwitch->userSwitchOnFunctionAddr);
 						}
-						else if(String(p2).equals("0"))
+						else if(String(p2).equals("1"))
 						{
 								currentSwitch->userSwitchState = true;
 								execute(currentSwitch->userSwitchOffFunctionAddr);
