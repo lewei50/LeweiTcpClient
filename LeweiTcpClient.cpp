@@ -74,42 +74,61 @@ UserFunction::UserFunction(void (*callfuct)(char*,char*,char*,char*,char*),const
 
 LeweiTcpClient::LeweiTcpClient(const char *userKey,const char *gatewayNo):
 	server(EthernetServer(80)),
-	_userKey(userKey),
-	_gatewayNo(gatewayNo),
+	//_userKey(userKey),
+	//_gatewayNo(gatewayNo),
 	tcpServer("tcp.lewei50.com")
 {
-	setupDefaultValue();
-	Ethernet.begin(_mac);
-	Serial.println(Ethernet.localIP());
-	delay(1000);
-	String clientStr="";
-	keepOnline();
-}
-
-LeweiTcpClient::LeweiTcpClient(const char *userKey,const char *gatewayNo,byte mac[]):
-	server(EthernetServer(80)),
-	_userKey(userKey),
-	_gatewayNo(gatewayNo),
-	tcpServer("tcp.lewei50.com")
-{
+	_userKey = (char*)malloc( strlen(userKey)+1 );
+	strcpy( _userKey,userKey );
+	
+	_gatewayNo = (char*)malloc( strlen(gatewayNo)+1 );
+	strcpy( _gatewayNo,gatewayNo );
+	//_userKey = userKey;
+	//_gatewayNo = gatewayNo;
 	setupDefaultValue();
 	//IPAddress tcpServer(42,121,128,216); //tcp.lewei50.com's ip
 	//IPAddress uploadServer(42,121,128,216);// "open.lewei50.com";
 	
+	Ethernet.begin(_mac);
+	Serial.println(Ethernet.localIP());
+	//Ethernet.begin(mac, ip);
+	delay(1000);
+	String clientStr="";
+	//_postInterval = 5000;
+	//_starttime = millis();
+	keepOnline();
+	//EthernetServer server(80);
+	//_server = &server;
+}
+/*
+LeweiTcpClient::LeweiTcpClient(const char *userKey,const char *gatewayNo,byte mac[]):server(EthernetServer(80))
+{
+	_userKey = userKey;
+	_gatewayNo = gatewayNo;
+	setupDefaultValue();
+	
 	Ethernet.begin(mac);
 	Serial.println(Ethernet.localIP());
 	delay(1000);
+	
 	String clientStr="";
 	keepOnline();
 }
-
+*/
 
 LeweiTcpClient::LeweiTcpClient( const char *userKey,const char *gatewayNo,byte mac[],IPAddress ip,IPAddress dns,IPAddress gw,IPAddress subnet):
 	server(EthernetServer(80)),
-	_userKey(userKey),
-	_gatewayNo(gatewayNo),
+	//_userKey(userKey),
+	//_gatewayNo(gatewayNo),
 	tcpServer("tcp.lewei50.com")
 {
+	_userKey = (char*)malloc( strlen(userKey)+1 );
+	strcpy( _userKey,userKey );
+	
+	_gatewayNo = (char*)malloc( strlen(gatewayNo)+1 );
+	strcpy( _gatewayNo,gatewayNo );
+	//_userKey = userKey;
+	//_gatewayNo = gatewayNo;
 	setupDefaultValue();
 	Ethernet.begin(mac,ip,dns,gw,subnet);
 	Serial.println(Ethernet.localIP());
@@ -120,10 +139,23 @@ LeweiTcpClient::LeweiTcpClient( const char *userKey,const char *gatewayNo,byte m
 
 void LeweiTcpClient::setupDefaultValue()
 {
+	//checkFreeMem();
 	head = NULL;
+	//tcpServer = IPAddress(42,121,128,216); //tcp.lewei50.com's ip
+	//uploadServer = IPAddress(121,197,10,140);// "open.lewei50.com";
+	//char tcpServer[] = "tcp.lewei50.com";
+	//char uploadServer[] = "open.lewei50.com";
+	
 	byte _mac[] = {0x74, 0x69, 0x69, 0x2D, 0x30, 0x31};
-	_postInterval = 60000;//server setting is 60000
+	_postInterval = 30000;//server setting is 60000
 	_starttime = millis();
+	//String tcpServerStr = "tcp.lewei50.com";
+	//tcpServerStr.toCharArray(tcpServer,16);
+	//tcpServerStr = NULL;
+	//String uploadServerStr = "open.lewei50.com";
+	//uploadServerStr.toCharArray(uploadServer,17);
+	//uploadServerStr = NULL;
+	//bIsConnecting = false;
 	
 	int len=strlen(_gatewayNo)+32+51;//api-key length:32
 	
@@ -131,6 +163,7 @@ void LeweiTcpClient::setupDefaultValue()
 	
 	aliveString=(char *)malloc(len);	
 	snprintf(aliveString, len, "{\"method\":\"update\",\"gatewayNo\":\"%s\",\"userkey\":\"%s\"}&^!", _gatewayNo, _userKey);
+	
 
 	setRevCtrlMsg("false","NotBind");
 	
@@ -667,6 +700,7 @@ void LeweiTcpClient::execute(void (*callfuct)(char*),char* p1)
 {
     callfuct(p1);
 }
+
 void LeweiTcpClient::execute(void (*callfuct)(char*,char*),char* p1,char* p2)
 {
     callfuct(p1,p2);
@@ -685,6 +719,7 @@ void LeweiTcpClient::execute(void (*callfuct)(char*,char*,char*,char*,char*),cha
 {
     callfuct(p1,p2,p3,p4,p5);
 }
+
 
 
 void LeweiTcpClient::addUserFunction(UserFunction &uFunction)
@@ -716,7 +751,8 @@ void LeweiTcpClient::addUserFunction(UserFunction &uFunction)
 		//Serial.println("reg addr2.");
 		n2->userFunctionAddr2 = uFunction.userFunctionAddr2;
 	}
-	else if(uFunction.userFunctionAddr1!=NULL)
+	else 
+	if(uFunction.userFunctionAddr1!=NULL)
 	{
 		//Serial.println("reg addr1.");
 		n2->userFunctionAddr1 = uFunction.userFunctionAddr1;

@@ -1,5 +1,5 @@
 /*
-nomal version,1.0,use for arduino mega 2560 with EasySetupMode
+lite version,1.0,use for arduino uno with EasySetupMode
 */
 
 #ifndef LeweiTcpClient_h
@@ -60,7 +60,7 @@ class LeweiTcpClient
 		char * commandString;
 		//boolean bIsConnecting;
 		LeweiTcpClient( const char *userKey,const char *gatewayNo);
-		LeweiTcpClient( const char *userKey,const char *gatewayNo,byte mac[]);
+		//LeweiTcpClient( const char *userKey,const char *gatewayNo,byte mac[]);
 		LeweiTcpClient( const char *userKey,const char *gatewayNo,byte mac[],IPAddress ip,IPAddress dns,IPAddress gw,IPAddress subnet);
 		void keepOnline();
 		void sendSensorValue(String sensorName,String sensorValue);
@@ -85,8 +85,8 @@ class LeweiTcpClient
 		void easySetupMode(boolean bEasyMode);
 
 	private:
-		const char *_userKey;
-		const char *_gatewayNo;
+		char *_userKey;
+		char *_gatewayNo;
 		byte _mac[];
 		//IPAddress _ip;
 		//IPAddress _dns;
