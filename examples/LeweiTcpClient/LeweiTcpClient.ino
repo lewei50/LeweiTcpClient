@@ -3,13 +3,12 @@
 #include <LeweiTcpClient.h>
 byte mac[] = {0x74,0x69,0x69,0x2D,0x30,0x31};
 
-#define LW_USERKEY "yourapikey"
-#define LW_GATEWAY "01"
-
 IPAddress ip(192,168,1, 15);
 IPAddress mydns(8,8,8,8);
 IPAddress gw(192,168,1,1);
 IPAddress subnet(255,255,255,0);
+#define LW_USERKEY "yourapikey"
+#define LW_GATEWAY "01"
  
 LeweiTcpClient *client;
 void setup()
@@ -30,18 +29,22 @@ void setup()
   //we test transfer 1-5 para from website(you defined on it) to your arduino
   //enjoy it
   
-	UserFunction uf1(test1,"testFunction");
+  UserFunction uf1(test1,"testFunction");
   client->addUserFunction(uf1);
   UserFunction uf2 (test2,"testFunction2");
   client->addUserFunction(uf2);
   UserFunction uf3 (test3,"testFunction3");
   client->addUserFunction(uf3);
-//  UserFunction uf4 (test4,"testFunction4");
-//  client->addUserFunction(uf4);
-//  UserFunction uf5 (test5,"testFunction5");
-//  client->addUserFunction(uf5);
-//  UserFunction uf6 (test6,"getAllSensors");
-//  client->addUserFunction(uf6);
+  UserFunction uf4 (test4,"testFunction4");
+  client->addUserFunction(uf4);
+  UserFunction uf5 (test5,"testFunction5");
+  client->addUserFunction(uf5);
+  
+  UserFunction uf6 (test6,"testFunction6");
+  client->addUserFunction(uf6);
+  
+  UserSwitch us1 (test7,test8,"mySwitch",1);
+  client->addUserSwitch(us1);
   
 }
 
@@ -96,10 +99,14 @@ void test5(char * p1,char * p2,char * p3,char * p4,char * p5)
 
 void test6()
 {
-  Serial.println("test function recall6");
-  
-  //client->directResponse("{\"method\":\"response\",\"result\":{\"successful\":true,\"message\":null,\"data\":[{\"id\":\"1\",\"type\":\"jdq\",\"name\":\"s1\",\"value\":\"1\",\"status\":\"ok\"},{\"id\":\"2\",\"type\":\"jdq\",\"name\":\"s2\",\"value\":\"1\",\"status\":\"ok\"}]}}");
-  //String msg = "{\"successful\":true,\"message\":null,\"data\":[{\"id\":\"1\",\"type\":\"jdq\",\"name\":\"s1\",\"value\":\"1\",\"status\":\"ok\"},{\"id\":\"2\",\"type\":\"jdq\",\"name\":\"s2\",\"value\":\"1\",\"status\":\"ok\"},{\"id\":\"3\",\"type\":\"jdq\",\"name\":\"s3\",\"value\":\"0\",\"status\":\"ok\"}]}";
-  char* msg ="test";
-  client->setRevCtrlMsg("true",msg);
+  Serial.println("no para");
+}
+
+void test7()
+{
+  Serial.println("switch on logic");
+}
+void test8()
+{
+  Serial.println("switch off logic");
 }
