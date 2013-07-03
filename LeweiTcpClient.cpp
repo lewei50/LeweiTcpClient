@@ -363,6 +363,10 @@ void LeweiTcpClient::sendUserSwitchState()
 		_clientRevCtrl.print(commandString);
 		free(commandString);
 		commandString = NULL;
+		
+		setRevCtrlMsg("false","NotBind");
+		setRevCtrlData("");
+		_clientStr = NULL;
 	}
 }
 
