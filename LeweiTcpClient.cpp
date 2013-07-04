@@ -154,6 +154,7 @@ void LeweiTcpClient::setupDefaultValue()
 	
 
 	setRevCtrlMsg("false","NotBind");
+	setRevCtrlData("");
 	
 	_bEasyMode = false;
 	
