@@ -90,6 +90,7 @@ class LeweiTcpClient
 		void sendSensorValue(String sensorName,int sensorValue);
 		void sendSensorValue(String sensorName,float sensorValue);
 		void sendSensorValue(String sensorName,double sensorValue);
+		void sendSensorValue(String sensorName,long sensorValue);
 		void connentTcpServer();
 		void execute(void (*callfuct)());
 		void execute(void (*callfuct)(char*),char* p1);
