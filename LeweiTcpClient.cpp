@@ -279,6 +279,11 @@ void LeweiTcpClient::sendSensorValue(String sensorName,double sensorValue)
 	sendSensorValue(sensorName,(String)s);
 	
 }
+void LeweiTcpClient::sendSensorValue(String sensorName,long sensorValue)
+{
+	sendSensorValue(sensorName,(String)sensorValue);
+	
+}
 
 
 void LeweiTcpClient::execute(void (*callfuct)())
