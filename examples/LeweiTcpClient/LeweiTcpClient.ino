@@ -45,14 +45,15 @@ void setup()
   UserFunction uf6 (test6,"getAllSensors");
   client->addUserFunction(uf6);
   
-  
-  //enable easySetupMode will open the port 80 of this board,
-  //you can setup your apikey and gateway number via http://your_arduino_ip/
-  //the key and number will be burned into board's eeprom
-  //after set you need to restart your arduino.
-  //after setup,you can comment this line for fasten your board.
-  //this library will will use apikey and gateway number in eeprom FIRST,if it exsit.
-  //you can send empty value from the browser to wipe the data in eeprom.
+  /*
+  enable easySetupMode will open the port 80 of this board,
+  you can setup your apikey and gateway number via http://your_arduino_ip/
+  the key and number will be burned into board's eeprom
+  after set you need to restart your arduino.
+  after setup,you can comment this line for fasten your board.
+  this library will will use apikey and gateway number in eeprom if you enable easySetupMode .
+  you can send empty value from the browser to wipe the data in eeprom.
+  */
   client->easySetupMode(true);
   
 }
