@@ -135,9 +135,6 @@ void LeweiTcpClient::setupDefaultValue()
 	_starttime = millis();
 	
 	int len=strlen(_gatewayNo)+32+51;//api-key length:32
-	
-	readRom();
-	
 	aliveString=(char *)malloc(len);	
 	snprintf(aliveString, len, "{\"method\":\"update\",\"gatewayNo\":\"%s\",\"userkey\":\"%s\"}&^!", _gatewayNo, _userKey);
 	
@@ -155,6 +152,11 @@ void LeweiTcpClient::easySetupMode(boolean bEasyMode)
 	_bEasyMode = bEasyMode;
 	if(_bEasyMode)
 	{
+		readRom();
+		int len=strlen(_gatewayNo)+32+51;//api-key length:32
+		aliveString=(char *)realloc(aliveString,len);	
+		snprintf(aliveString, len, "{\"method\":\"update\",\"gatewayNo\":\"%s\",\"userkey\":\"%s\"}&^!", _gatewayNo, _userKey);
+		
 		server.begin();
 	  //Serial.print("srv:");
 	  //Serial.println(Ethernet.localIP());
