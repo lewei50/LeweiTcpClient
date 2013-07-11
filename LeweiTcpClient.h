@@ -21,9 +21,9 @@ struct UserFunctionNode
 	void (*userFunctionAddr0)();
 	void (*userFunctionAddr1)(char*);
 	void (*userFunctionAddr2)(char*,char*);
-	//void (*userFunctionAddr3)(char*,char*,char*);
-	//void (*userFunctionAddr4)(char*,char*,char*,char*);
-	//void (*userFunctionAddr5)(char*,char*,char*,char*,char*);
+	void (*userFunctionAddr3)(char*,char*,char*);
+	void (*userFunctionAddr4)(char*,char*,char*,char*);
+	void (*userFunctionAddr5)(char*,char*,char*,char*,char*);
 	const char *userFunctionName;
 	UserFunctionNode*next;
 };
@@ -34,15 +34,15 @@ class UserFunction
 		UserFunction(void (*callfuct)(),const char *userFunctionName);
 		UserFunction(void (*callfuct)(char*),const char *userFunctionName);
 		UserFunction(void (*callfuct)(char*,char*),const char *userFunctionName);
-		//UserFunction(void (*callfuct)(char*,char*,char*),const char *userFunctionName);
-		//UserFunction(void (*callfuct)(char*,char*,char*,char*),const char *userFunctionName);
-		//UserFunction(void (*callfuct)(char*,char*,char*,char*,char*),const char *userFunctionName);
+		UserFunction(void (*callfuct)(char*,char*,char*),const char *userFunctionName);
+		UserFunction(void (*callfuct)(char*,char*,char*,char*),const char *userFunctionName);
+		UserFunction(void (*callfuct)(char*,char*,char*,char*,char*),const char *userFunctionName);
 		void (*userFunctionAddr0)();
 		void (*userFunctionAddr1)(char*);
 		void (*userFunctionAddr2)(char*,char*);
-		//void (*userFunctionAddr3)(char*,char*,char*);
-		//void (*userFunctionAddr4)(char*,char*,char*,char*);
-		//void (*userFunctionAddr5)(char*,char*,char*,char*,char*);
+		void (*userFunctionAddr3)(char*,char*,char*);
+		void (*userFunctionAddr4)(char*,char*,char*,char*);
+		void (*userFunctionAddr5)(char*,char*,char*,char*,char*);
 		const char *userFunctionName;
 	private:
 		UserFunction *next;
@@ -95,9 +95,9 @@ class LeweiTcpClient
 		void execute(void (*callfuct)());
 		void execute(void (*callfuct)(char*),char* p1);
 		void execute(void (*callfuct)(char*,char*),char* p1,char* p2);
-		//void execute(void (*callfuct)(char*,char*,char*),char* p1,char* p2,char* p3);
-		//void execute(void (*callfuct)(char*,char*,char*,char*),char* p1,char* p2,char* p3,char* p4);
-		//void execute(void (*callfuct)(char*,char*,char*,char*,char*),char* p1,char* p2,char* p3,char* p4,char* p5);
+		void execute(void (*callfuct)(char*,char*,char*),char* p1,char* p2,char* p3);
+		void execute(void (*callfuct)(char*,char*,char*,char*),char* p1,char* p2,char* p3,char* p4);
+		void execute(void (*callfuct)(char*,char*,char*,char*,char*),char* p1,char* p2,char* p3,char* p4,char* p5);
 
 
 		void addUserFunction(UserFunction &uFunction);
