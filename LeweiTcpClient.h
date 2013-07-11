@@ -1,5 +1,5 @@
 /*
-lite version,1.0,use for arduino uno with EasySetupMode
+normal version,1.0,use for arduino mega 2560 with EasySetupMode
 */
 
 #ifndef LeweiTcpClient_h
