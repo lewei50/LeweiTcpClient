@@ -201,7 +201,7 @@ void LeweiTcpClient::readRom()
     
     if(address==31)
     {
-    	if(tmp.length()>0)
+    	if(tmp.length()==32)
     	{
 	    	char * tmpc = strToChar(tmp);
 	    	_userKey = tmpc;
@@ -260,7 +260,7 @@ void LeweiTcpClient::listenServer()
           	Serial.print(clientStr);
           	String userInfoStr = clientStr.substring(clientStr.indexOf(" /?a=")+5,clientStr.indexOf("&g="));
           	userInfoStr += clientStr.substring(clientStr.indexOf("&g=")+3,clientStr.indexOf(" HTTP/1.1"));
-            writeRom(userInfoStr);
+            if(userInfoStr.length()>33)writeRom(userInfoStr);
             Serial.println(userInfoStr);
           }
           //Serial.println(clientStr);
