@@ -139,6 +139,7 @@ class LeweiTcpClient
 		void writeRom(String value);
 		void readRom();
 		void listenServer();
+		void softwareReset();
 
 		EthernetServer server;
 };

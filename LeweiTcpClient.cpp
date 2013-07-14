@@ -180,8 +180,15 @@ void LeweiTcpClient::writeRom(String value)
   for(int i =0;i<52;i++)
   {
      EEPROM.write(i, value.charAt(i));
-   }
+  }
+  softwareReset();
 }
+
+void LeweiTcpClient::softwareReset()
+{
+   asm volatile ("  jmp 0");
+}
+
 
 
 void LeweiTcpClient::readRom()
