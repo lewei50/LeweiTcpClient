@@ -368,7 +368,56 @@ void LeweiTcpClient::sendUserSwitchState()
 		free(commandString);
 		commandString = NULL;
 		
-		setRevCtrlMsg("false","NotBind");
+		setRevCtrlMsg("true","ok");
+		setRevCtrlData("");
+		_clientStr = NULL;
+	}
+}
+
+void LeweiTcpClient::updateUserSwitchState(char* switchId,char* switchStat)
+{
+	UserSwitchNode *currentSwitch = switchHead;                    
+	boolean bFirstNode = true;
+	//{\"id\":\"m\",\"name\":\"m\",\"value\":\"0\",\"status\":\"ok\"}
+	String stateStr = "[";
+	while(currentSwitch != NULL)
+	{
+		if(String(switchId).equals(String(currentSwitch->userSwitchId)))
+		{
+			if(!bFirstNode)stateStr+=",";
+			stateStr+="{\"id\":\"";
+			stateStr+=currentSwitch->userSwitchId;
+			//stateStr+="\",\"name\":\"";
+			//stateStr+=currentSwitch->userSwitchId;
+			stateStr+="\",\"value\":\"";
+			stateStr+=switchStat;
+			stateStr+="\",\"status\":\"ok\"}"; 
+			bFirstNode = false;
+		}
+		currentSwitch = currentSwitch->next;
+	}
+	stateStr+="]";
+	Serial.println(stateStr);
+	
+	if(!bFirstNode)
+	{
+		setRevCtrlMsg("true","ok");
+		char * msg = strToChar(stateStr);
+		setRevCtrlData(msg);
+		msg = NULL;
+	}
+	
+	if(strlen(_revCtrlData)>0)
+	{
+		int len=strlen(_revCtrlResult)+strlen(_revCtrlMsg)+strlen(_revCtrlData)+71;
+		commandString=(char *)malloc(len);	
+		snprintf(commandString, len, "{\"method\":\"response\",\"result\":{\"successful\":%s,\"message\":\"%s\",\"data\":%s}}&^!", _revCtrlResult, _revCtrlMsg,_revCtrlData);
+		
+		_clientRevCtrl.print(commandString);
+		free(commandString);
+		commandString = NULL;
+		
+		setRevCtrlMsg("true","ok");
 		setRevCtrlData("");
 		_clientStr = NULL;
 	}
@@ -402,46 +451,11 @@ void LeweiTcpClient::getResponse()
 		if(!functionName.equals(""))//here comes user defined command
 		{
   		//Serial.print("f:");
-		//checkFreeMem();
 			//Serial.println(functionName);
-			//Serial.println(p1);
-		//checkFreeMem();
 			if(functionName.equals("getAllSensors"))//try to return the switch status list to server
 			{
 				sendUserSwitchState();
 				return;
-				/*
-				UserSwitchNode *currentSwitch = switchHead;                    
-				boolean bFirstNode = true;
-				//{\"id\":\"m\",\"name\":\"m\",\"value\":\"0\",\"status\":\"ok\"}
-				String stateStr = "[";
-				while(currentSwitch != NULL)
-				{
-					if(!bFirstNode)stateStr+=",";
-					stateStr+="{\"id\":\"";
-					stateStr+=currentSwitch->userSwitchId;
-					stateStr+="\",\"name\":\"";
-					stateStr+=currentSwitch->userSwitchId;
-					stateStr+="\",\"value\":\"";
-					stateStr+=currentSwitch->userSwitchState;
-					stateStr+="\",\"status\":\"ok\"}";
-					//Serial.println(functionName);
-					//Serial.println(currentSwitch->userSwitchId);
-					//Serial.println(currentSwitch->userSwitchState);     
-					bFirstNode = false;
-					currentSwitch = currentSwitch->next;
-				}
-				stateStr+="]";
-				Serial.println(stateStr);
-				
-				if(!bFirstNode)
-				{
-					setRevCtrlMsg("true","ok");
-					char * msg = strToChar(stateStr);
-  				setRevCtrlData(msg);
-  				msg = NULL;
-				}
-				*/
 				
 			}
 			else if(functionName.equals("updateSensor"))
@@ -450,10 +464,8 @@ void LeweiTcpClient::getResponse()
 				UserSwitchNode *currentSwitch = switchHead;  
 				while(currentSwitch != NULL)
 				{ 
-				Serial.println(p1);
 					if(String(p1).equals(String(currentSwitch->userSwitchId)))
 					{
-				Serial.println(p2);
 						if(String(p2).equals("0"))
 						{
 								currentSwitch->userSwitchState = false;
@@ -465,7 +477,7 @@ void LeweiTcpClient::getResponse()
 								execute(currentSwitch->userSwitchOffFunctionAddr);
 						}
 						
-						sendUserSwitchState();
+						updateUserSwitchState(p1,p2);
 					}
 					currentSwitch = currentSwitch->next;
 				}

@@ -133,6 +133,7 @@ class LeweiTcpClient
 		char* _revCtrlData;
 		
 		void sendUserSwitchState();
+		void updateUserSwitchState(char* p1,char * p2);
 		
 		boolean _bEasyMode;
 		void writeRom(String value);
