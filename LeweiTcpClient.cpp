@@ -355,16 +355,17 @@ void LeweiTcpClient::sendUserSwitchState()
 		currentSwitch = currentSwitch->next;
 	}
 	stateStr+="]";
-	Serial.println(stateStr);
+	//Serial.println(stateStr);
 	
 	if(!bFirstNode)
 	{
 		setRevCtrlMsg("true","ok");
 		char * msg = strToChar(stateStr);
 		setRevCtrlData(msg);
-		msg = NULL;
+		//msg = NULL;
 	}
-	
+	stateStr = "";
+	stateStr = NULL;
 	if(strlen(_revCtrlData)>0)
 	{
 		int len=strlen(_revCtrlResult)+strlen(_revCtrlMsg)+strlen(_revCtrlData)+71;
@@ -374,7 +375,8 @@ void LeweiTcpClient::sendUserSwitchState()
 		_clientRevCtrl.print(commandString);
 		free(commandString);
 		commandString = NULL;
-		
+		free(_revCtrlData);
+		_revCtrlData = NULL;
 		setRevCtrlMsg("true","ok");
 		setRevCtrlData("");
 		_clientStr = NULL;
@@ -423,6 +425,8 @@ void LeweiTcpClient::updateUserSwitchState(char* switchId,char* switchStat)
 		_clientRevCtrl.print(commandString);
 		free(commandString);
 		commandString = NULL;
+		free(_revCtrlData);
+		_revCtrlData = NULL;
 		
 		setRevCtrlMsg("true","ok");
 		setRevCtrlData("");
@@ -447,6 +451,7 @@ void LeweiTcpClient::getResponse()
 			//return;
 		//}
 		//checkFreeMem();
+		
 		String functionName = getParaValueStr(_clientStr,"f");
 			char* p1 = getParaValue(_clientStr,"p1");
 			char* p2 = getParaValue(_clientStr,"p2");
@@ -454,7 +459,7 @@ void LeweiTcpClient::getResponse()
 			char* p4 = getParaValue(_clientStr,"p4");
 			char* p5 = getParaValue(_clientStr,"p5");
 			_clientStr = NULL;
-		checkFreeMem();
+			
 		if(!functionName.equals(""))//here comes user defined command
 		{
   		//Serial.print("f:");
@@ -462,12 +467,18 @@ void LeweiTcpClient::getResponse()
 			if(functionName.equals("getAllSensors"))//try to return the switch status list to server
 			{
 				sendUserSwitchState();
+				free(p1);free(p2);free(p3);free(p4);free(p5);
+				p1=p2=p3=p4=p5=NULL;
+				free(commandString);
+				commandString = NULL;
+				
 				return;
 				
 			}
 			else if(functionName.equals("updateSensor"))
 			{
 				Serial.println("updateSensor.....");
+				
 				UserSwitchNode *currentSwitch = switchHead;  
 				while(currentSwitch != NULL)
 				{ 
@@ -563,7 +574,6 @@ void LeweiTcpClient::getResponse()
 			_clientRevCtrl.print(commandString);
 			free(commandString);
 			commandString = NULL;
-		
 		setRevCtrlMsg("false","NotBind");
 		setRevCtrlData("");
 		_clientStr = NULL;
@@ -713,15 +723,16 @@ void LeweiTcpClient::sendSensorValue(String sensorName,String sensorValue)
 
 void LeweiTcpClient::checkFreeMem()
 {
-		for(int i = 512;i>0;i--)
+	int startPos = 2048;
+		for(int i = 2048;i>0;i--)
 		{
-			char* c = (char*)malloc(i);
+			char* c = (char*)malloc(i+startPos);
 			if(c)
 			{
 				free(c);
 				c=NULL;
 				Serial.print("M");
-				Serial.println(i);
+				Serial.println(i+startPos);
 				break;
 			}
 		}
