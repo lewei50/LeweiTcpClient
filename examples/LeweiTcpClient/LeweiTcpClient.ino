@@ -46,8 +46,8 @@ void setup()
   client->addUserFunction(uf6);
   
   
-  //4 para means offFunction,onFunction,function name defined on web,default state
-  UserSwitch us1 (test7,test8,"mySwitch",1);
+  //4 para means changeFunction,function name defined on web,default state
+  UserSwitch us1 (test7,"mySwitch",0);
   client->addUserSwitch(us1);
   
   /*
@@ -117,11 +117,18 @@ void test6()
   Serial.println("no para");
 }
 
-void test7()
+void test7(char * p1)
 {
-  Serial.println("switch on logic");
-}
-void test8()
-{
-  Serial.println("switch off logic");
+	if(String(p1).equals("0"))
+	{
+		Serial.println("switch on logic");
+	}
+	else if(String(p1).equals("1"))
+	{
+		Serial.println("switch off logic");
+	}
+	else if(String(p1).equals("2"))
+	{
+		Serial.println("other switch change logic");
+	}
 }

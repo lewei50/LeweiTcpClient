@@ -52,8 +52,10 @@ class UserFunction
 
 struct UserSwitchNode
 {
-	void (*userSwitchOnFunctionAddr)();
-	void (*userSwitchOffFunctionAddr)();
+	//void (*userSwitchOnFunctionAddr)();
+	//void (*userSwitchOffFunctionAddr)();
+	void (*userSwitchFunctionAddr)(char*);
+	char * p1;
 	const char *userSwitchId;
 	boolean userSwitchState;
 	UserSwitchNode*next;
@@ -62,9 +64,11 @@ struct UserSwitchNode
 class UserSwitch
 {
 	public:
-		UserSwitch(void (*uSwitchOnFunctionAddr)(),void (*uSwitchOffFunctionAddr)(),const char *uSwtichId,boolean uSwitchState);
-		void (*userSwitchOnFunctionAddr)();
-		void (*userSwitchOffFunctionAddr)();
+		UserSwitch(void (*uSwitchFunctionAddr)(char*),const char *uSwtichId,boolean uSwitchState);
+		//void (*userSwitchOnFunctionAddr)();
+		//void (*userSwitchOffFunctionAddr)();
+		void (*userSwitchFunctionAddr)(char*);
+		char * p1;
 		const char *userSwitchId;
 		boolean userSwitchState;
 	private:

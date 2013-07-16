@@ -73,10 +73,11 @@ UserFunction::UserFunction(void (*callfuct)(char*,char*,char*,char*,char*),const
 
 
 
-UserSwitch::UserSwitch(void (*uSwitchOnFunctionAddr)(),void (*uSwitchOffFunctionAddr)(),const char *uSwitchId,boolean uSwitchState)
+UserSwitch::UserSwitch(void (*uSwitchFunctionAddr)(char*),const char *uSwitchId,boolean uSwitchState)
 {
-	userSwitchOnFunctionAddr=uSwitchOnFunctionAddr;
-	userSwitchOffFunctionAddr=uSwitchOffFunctionAddr;
+	//userSwitchOnFunctionAddr=uSwitchOnFunctionAddr;
+	//userSwitchOffFunctionAddr=uSwitchOffFunctionAddr;
+	userSwitchFunctionAddr = uSwitchFunctionAddr;
 	userSwitchId=uSwitchId;
 	userSwitchState=uSwitchState;
 	next = NULL;
@@ -484,6 +485,7 @@ void LeweiTcpClient::getResponse()
 				{ 
 					if(String(p1).equals(String(currentSwitch->userSwitchId)))
 					{
+						/*
 						if(String(p2).equals("0"))
 						{
 								currentSwitch->userSwitchState = false;
@@ -494,6 +496,8 @@ void LeweiTcpClient::getResponse()
 								currentSwitch->userSwitchState = true;
 								execute(currentSwitch->userSwitchOffFunctionAddr);
 						}
+						*/
+						execute(currentSwitch->userSwitchFunctionAddr,p2);
 						
 						updateUserSwitchState(p1,p2);
 					}
@@ -864,8 +868,9 @@ void LeweiTcpClient::addUserSwitch(UserSwitch &uSwitch)
 	UserSwitchNode *n1,*n2;
 	n2 = (UserSwitchNode*) new(UserSwitchNode);
 	
-	n2->userSwitchOnFunctionAddr = uSwitch.userSwitchOnFunctionAddr;
-	n2->userSwitchOffFunctionAddr = uSwitch.userSwitchOffFunctionAddr;
+	//n2->userSwitchOnFunctionAddr = uSwitch.userSwitchOnFunctionAddr;
+	//n2->userSwitchOffFunctionAddr = uSwitch.userSwitchOffFunctionAddr;
+	n2->userSwitchFunctionAddr = uSwitch.userSwitchFunctionAddr;
 	
 	n2->userSwitchId = uSwitch.userSwitchId;
 	n2->userSwitchState = uSwitch.userSwitchState;
