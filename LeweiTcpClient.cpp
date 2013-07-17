@@ -485,20 +485,19 @@ void LeweiTcpClient::getResponse()
 				{ 
 					if(String(p1).equals(String(currentSwitch->userSwitchId)))
 					{
-						/*
+						
 						if(String(p2).equals("0"))
 						{
 								currentSwitch->userSwitchState = false;
-								execute(currentSwitch->userSwitchOnFunctionAddr);
+								//execute(currentSwitch->userSwitchOnFunctionAddr);
 						}
-						else if(String(p2).equals("1"))
+						else
 						{
 								currentSwitch->userSwitchState = true;
-								execute(currentSwitch->userSwitchOffFunctionAddr);
+								//execute(currentSwitch->userSwitchOffFunctionAddr);
 						}
-						*/
-						execute(currentSwitch->userSwitchFunctionAddr,p2);
 						
+						execute(currentSwitch->userSwitchFunctionAddr,p2);
 						updateUserSwitchState(p1,p2);
 					}
 					currentSwitch = currentSwitch->next;
