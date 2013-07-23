@@ -21,12 +21,10 @@ LeweiTcpClient *client;
 void setup()
 {
   Serial.begin(9600);
-  //you can use 3 ways to init your network
+  //you can use 2 ways to init your network
   //1.simplest
   client = new LeweiTcpClient(LW_USERKEY, LW_GATEWAY);
-  //2.set mac only
-  //client = new LeweiTcpClient(LW_USERKEY, LW_GATEWAY,mac);
-  //3.full setting for your network
+  //2.full setting for your network
   //client = new LeweiTcpClient(LW_USERKEY, LW_GATEWAY,mac,ip,mydns,gw,subnet);
   
   
@@ -50,7 +48,7 @@ void setup()
   this library will will use apikey and gateway number in eeprom FIRST,if it exsit.
   you can send empty value from the browser to wipe the data in eeprom.
   */
-  client->easySetupMode(true);
+  //client->easySetupMode(true);
   pinMode(LED_PIN, OUTPUT);
 }
 

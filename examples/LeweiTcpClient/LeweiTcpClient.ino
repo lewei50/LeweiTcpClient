@@ -52,7 +52,7 @@ void setup()
   this library will will use apikey and gateway number in eeprom if you enable easySetupMode .
   you can send empty value from the browser to wipe the data in eeprom.
   */
-  client->easySetupMode(true);
+  //client->easySetupMode(true);
   
 }
 
