@@ -1,5 +1,5 @@
 /*
-normal version,1.0,use for arduino mega 2560 with EasySetupMode
+lite version,1.0,use for arduino uno with EasySetupMode
 */
 
 #ifndef LeweiTcpClient_h
@@ -21,9 +21,9 @@ struct UserFunctionNode
 	void (*userFunctionAddr0)();
 	void (*userFunctionAddr1)(char*);
 	void (*userFunctionAddr2)(char*,char*);
-	void (*userFunctionAddr3)(char*,char*,char*);
-	void (*userFunctionAddr4)(char*,char*,char*,char*);
-	void (*userFunctionAddr5)(char*,char*,char*,char*,char*);
+	//void (*userFunctionAddr3)(char*,char*,char*);
+	//void (*userFunctionAddr4)(char*,char*,char*,char*);
+	//void (*userFunctionAddr5)(char*,char*,char*,char*,char*);
 	const char *userFunctionName;
 	UserFunctionNode*next;
 };
@@ -34,15 +34,15 @@ class UserFunction
 		UserFunction(void (*callfuct)(),const char *userFunctionName);
 		UserFunction(void (*callfuct)(char*),const char *userFunctionName);
 		UserFunction(void (*callfuct)(char*,char*),const char *userFunctionName);
-		UserFunction(void (*callfuct)(char*,char*,char*),const char *userFunctionName);
-		UserFunction(void (*callfuct)(char*,char*,char*,char*),const char *userFunctionName);
-		UserFunction(void (*callfuct)(char*,char*,char*,char*,char*),const char *userFunctionName);
+		//UserFunction(void (*callfuct)(char*,char*,char*),const char *userFunctionName);
+		//UserFunction(void (*callfuct)(char*,char*,char*,char*),const char *userFunctionName);
+		//UserFunction(void (*callfuct)(char*,char*,char*,char*,char*),const char *userFunctionName);
 		void (*userFunctionAddr0)();
 		void (*userFunctionAddr1)(char*);
 		void (*userFunctionAddr2)(char*,char*);
-		void (*userFunctionAddr3)(char*,char*,char*);
-		void (*userFunctionAddr4)(char*,char*,char*,char*);
-		void (*userFunctionAddr5)(char*,char*,char*,char*,char*);
+		//void (*userFunctionAddr3)(char*,char*,char*);
+		//void (*userFunctionAddr4)(char*,char*,char*,char*);
+		//void (*userFunctionAddr5)(char*,char*,char*,char*,char*);
 		const char *userFunctionName;
 	private:
 		UserFunction *next;

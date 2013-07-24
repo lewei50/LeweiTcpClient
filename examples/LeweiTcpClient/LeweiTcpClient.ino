@@ -16,13 +16,11 @@ LeweiTcpClient *client;
 void setup()
 {
   Serial.begin(9600);
-  //you can use 3 ways to init your network
+  //you can use 2 ways to init your network
   //1.simplest
-  client = new LeweiTcpClient(LW_USERKEY, LW_GATEWAY);
-  //2.set mac only
-  //client = new LeweiTcpClient(LW_USERKEY, LW_GATEWAY,mac);
-  //3.full setting for your network
-  //client = new LeweiTcpClient(LW_USERKEY, LW_GATEWAY,mac,ip,mydns,gw,subnet);
+  //client = new LeweiTcpClient(LW_USERKEY, LW_GATEWAY);
+  //2.full setting for your network
+  client = new LeweiTcpClient(LW_USERKEY, LW_GATEWAY,mac,ip,mydns,gw,subnet);
   
   
   //test1 is the function you write below to handle your program
@@ -35,18 +33,18 @@ void setup()
   client->addUserFunction(uf1);
   UserFunction uf2 (test2,"testFunction2");
   client->addUserFunction(uf2);
+  /*
   UserFunction uf3 (test3,"testFunction3");
   client->addUserFunction(uf3);
   UserFunction uf4 (test4,"testFunction4");
   client->addUserFunction(uf4);
   UserFunction uf5 (test5,"testFunction5");
   client->addUserFunction(uf5);
-  
   UserFunction uf6 (test6,"testFunction6");
   client->addUserFunction(uf6);
+  */
   
-  
-  //4 para means changeFunction,function name defined on web,default state
+  //3 para means changeFunction,function name defined on web,default state
   UserSwitch us1 (test7,"mySwitch",0);
   client->addUserSwitch(us1);
   

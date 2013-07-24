@@ -1,4 +1,4 @@
-LeweiTcpClient
+LeweiTcpClient lite beta
 ==============
 Using this library is the one of the most easiest way to 
 
@@ -22,7 +22,7 @@ https://github.com/lewei50/LeweiTcpClient/tree/LeweiTcpClientLite
 * the lite version can only accept 0/1/2 parameter(s) from the website you defined on it.
 * the normal version can accecpt 0/1/2/3/4/5 parameter(s).
 
-This is normal version.
+This is lite version with switches functions.
 
 Enjoy it~
 
