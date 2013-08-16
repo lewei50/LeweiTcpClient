@@ -57,6 +57,11 @@ class LeweiTcpClient
 		char * commandString;
 		LeweiTcpClient( const char *userKey,const char *gatewayNo);
 		void keepOnline();
+		void appendSensorValue(String sensorName,String sensorValue);
+		void appendSensorValue(String sensorName,int sensorValue);
+		void appendSensorValue(String sensorName,float sensorValue);
+		void appendSensorValue(String sensorName,double sensorValue);
+		void appendSensorValue(String sensorName,long sensorValue);
 		void sendSensorValue(String sensorName,String sensorValue);
 		void sendSensorValue(String sensorName,int sensorValue);
 		void sendSensorValue(String sensorName,float sensorValue);
@@ -81,6 +86,7 @@ class LeweiTcpClient
 		String _clientStr;
 		long _starttime;
 		int _postInterval;
+		String _sensorValueStr;
 		
 		int _recieveTimeout ;
 		long _recieveStartTime;

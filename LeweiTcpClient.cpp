@@ -244,9 +244,43 @@ void LeweiTcpClient::setRevCtrlMsg(char* execResult,char* msg)
 	_revCtrlMsg = msg;
 }
 
+
+void LeweiTcpClient::appendSensorValue(String sensorName,String sensorValue)
+{
+	_sensorValueStr +="{\"Name\":\"";
+	_sensorValueStr +=sensorName;
+	_sensorValueStr +="\",\"Value\":\"";
+	_sensorValueStr +=sensorValue;
+	_sensorValueStr +="\"},";
+}
+void LeweiTcpClient::appendSensorValue(String sensorName,int sensorValue)
+{
+	appendSensorValue(sensorName,String(sensorValue));
+}
+void LeweiTcpClient::appendSensorValue(String sensorName,float sensorValue)
+{
+	char s[10];
+	int val_len = snprintf(s, 10,"%d.%02u", (int)sensorValue, (int)(abs(sensorValue)*100+0.5) % 100);
+	appendSensorValue(sensorName,(String)s);
+}
+
+void LeweiTcpClient::appendSensorValue(String sensorName,double sensorValue)
+{
+	char s[10];
+	int val_len = snprintf(s, 10,"%d.%02u", (int)sensorValue, (int)(abs(sensorValue)*100+0.5) % 100);
+	appendSensorValue(sensorName,(String)s);
+}
+void LeweiTcpClient::appendSensorValue(String sensorName,long sensorValue)
+{
+	appendSensorValue(sensorName,(String)sensorValue);
+}
+
 void LeweiTcpClient::sendSensorValue(String sensorName,String sensorValue)
 {
-	String connStr = "{\"method\": \"upload\", \"data\":[{\"Name\":\"";
+	
+	String connStr = "{\"method\": \"upload\", \"data\":[";
+	connStr+=_sensorValueStr;
+	connStr+="{\"Name\":\"";
 	connStr+=sensorName;
 	connStr+="\",\"Value\":\"";
 	connStr+=sensorValue;
@@ -254,6 +288,7 @@ void LeweiTcpClient::sendSensorValue(String sensorName,String sensorValue)
 	Serial.print(connStr);
 	
 	connStr = NULL;
+	_sensorValueStr = "";
 }
 
 
