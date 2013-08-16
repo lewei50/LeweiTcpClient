@@ -90,6 +90,11 @@ class LeweiTcpClient
 		//LeweiTcpClient( const char *userKey,const char *gatewayNo,byte mac[]);
 		LeweiTcpClient( const char *userKey,const char *gatewayNo,byte mac[],IPAddress ip,IPAddress dns,IPAddress gw,IPAddress subnet);
 		void keepOnline();
+		void appendSensorValue(String sensorName,String sensorValue);
+		void appendSensorValue(String sensorName,int sensorValue);
+		void appendSensorValue(String sensorName,float sensorValue);
+		void appendSensorValue(String sensorName,double sensorValue);
+		void appendSensorValue(String sensorName,long sensorValue);
 		void sendSensorValue(String sensorName,String sensorValue);
 		void sendSensorValue(String sensorName,int sensorValue);
 		void sendSensorValue(String sensorName,float sensorValue);
@@ -124,6 +129,7 @@ class LeweiTcpClient
 		String _clientStr;
 		long _starttime;
 		int _postInterval;
+		String _sensorValueStr;
 		EthernetClient _clientRevCtrl;//connect to tcp.lewei50.com and keep alive
 		
 		void sendOnlineCommand();

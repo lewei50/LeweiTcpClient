@@ -19,7 +19,7 @@ connentTcpServer	KEYWORD2
 addUserFunction	KEYWORD2
 sendSensorValue	KEYWORD2
 setRevCtrlMsg	KEYWORD2
-
+appendSensorValue	KEYWORD2
 #######################################
 # Constants (LITERAL1)
 #######################################
