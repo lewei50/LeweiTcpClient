@@ -534,7 +534,9 @@ void LeweiTcpClient::sendSensorValue(String sensorName,String sensorValue)
 	if (_clientRevCtrl.connected())
 	{
 		//checkFreeMem();
-		String connStr = "{\"method\": \"upload\", \"data\":[{\"Name\":\"";
+		String connStr = "{\"method\": \"upload\", \"data\":[";
+		connStr+=_sensorValueStr;
+		connStr+="{\"Name\":\"";
 		connStr+=sensorName;
 		connStr+="\",\"Value\":\"";
 		connStr+=sensorValue;
@@ -553,6 +555,7 @@ void LeweiTcpClient::sendSensorValue(String sensorName,String sensorValue)
 			Serial.println("malloc:F");
 		}
 		connStr = NULL;
+		_sensorValueStr = "";
 		
 		//checkFreeMem();
 		
