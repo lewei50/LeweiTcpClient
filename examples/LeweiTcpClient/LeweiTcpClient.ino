@@ -25,6 +25,8 @@ client->keepOnline();
 //    if ((millis()-starttime) > postInterval)
 //    {
 //      String val = "1000";
+//      client->appendSensorValue("temperature",11);
+//      you can append more sensors here,and use sendSensorValue to send
 //      //client->sendSensorValue("dsm501",val);
 //      starttime = millis();
 //    }
