@@ -108,6 +108,7 @@ class LeweiTcpClient
 		void execute(void (*callfuct)(char*,char*,char*,char*),char* p1,char* p2,char* p3,char* p4);
 		void execute(void (*callfuct)(char*,char*,char*,char*,char*),char* p1,char* p2,char* p3,char* p4,char* p5);
 
+		void executeStrCmd(String cmdStr);
 
 		void addUserFunction(UserFunction &uFunction);
 		void setRevCtrlMsg(char* execResult,char* msg);

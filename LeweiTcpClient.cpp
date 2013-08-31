@@ -435,6 +435,12 @@ void LeweiTcpClient::updateUserSwitchState(char* switchId,char* switchStat)
 	}
 }
 
+void LeweiTcpClient::executeStrCmd(String cmdStr)
+{
+	_clientStr = cmdStr;
+	getResponse();
+}
+
 void LeweiTcpClient::getResponse()
 {
 	if (_clientRevCtrl.available())
