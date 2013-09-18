@@ -407,7 +407,7 @@ void LeweiTcpClient::updateUserSwitchState(char* switchId,char* switchStat)
 		currentSwitch = currentSwitch->next;
 	}
 	stateStr+="]";
-	Serial.println(stateStr);
+	//Serial.println(stateStr);
 	
 	if(!bFirstNode)
 	{
@@ -478,7 +478,7 @@ void LeweiTcpClient::getResponse()
 			}
 			else if(functionName.equals("updateSensor"))
 			{
-				Serial.println("updateSensor.....");
+				//Serial.println("updateSensor.....");
 				
 				UserSwitchNode *currentSwitch = switchHead;  
 				while(currentSwitch != NULL)
@@ -499,6 +499,7 @@ void LeweiTcpClient::getResponse()
 						
 						execute(currentSwitch->userSwitchFunctionAddr,p2);
 						updateUserSwitchState(p1,p2);
+						return;
 					}
 					currentSwitch = currentSwitch->next;
 				}
@@ -573,7 +574,7 @@ void LeweiTcpClient::getResponse()
 				commandString=(char *)malloc(len);	
 				snprintf(commandString, len, "{\"method\":\"response\",\"result\":{\"successful\":%s,\"message\":\"%s\"}}&^!", _revCtrlResult, _revCtrlMsg);
 			}
-			Serial.println(commandString);
+			//Serial.println(commandString);
 			_clientRevCtrl.print(commandString);
 			free(commandString);
 			commandString = NULL;
@@ -606,7 +607,7 @@ String LeweiTcpClient::getParaValueStr(String &orig,String paraName)
 		
 		return functionName;
 }
-/*
+
 void LeweiTcpClient::directResponse(String respStr)
 {
 	if(_clientRevCtrl.connected())
@@ -615,12 +616,12 @@ void LeweiTcpClient::directResponse(String respStr)
 		char* c = (char*)malloc(respStr.length()+1);
 		respStr.toCharArray(c,respStr.length()+1);
 		_clientRevCtrl.print(c);
-		Serial.println(c);
+		//Serial.print(c);
 		free(c);
 		c = NULL;
 	}
 }
-*/
+
 void LeweiTcpClient::connentTcpServer()
 {
 	Serial.print("Connect");

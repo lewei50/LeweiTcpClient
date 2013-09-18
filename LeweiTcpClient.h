@@ -112,7 +112,7 @@ class LeweiTcpClient
 		void addUserFunction(UserFunction &uFunction);
 		void setRevCtrlMsg(char* execResult,char* msg);
 		void setRevCtrlData(char* data);
-		//void directResponse(String respStr);
+		void directResponse(String respStr);
 		
 		
 		void addUserSwitch(UserSwitch &uSwitch);
