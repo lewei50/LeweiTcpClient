@@ -78,8 +78,8 @@ void sendDht11Value()
                     //Serial.print("*** start data collection ");
                     //Serial.println(DHT11.temperature);
                     
-//                    client->sendSensorValue("tcp1","20");
-                    client->sendSensorValue("temperature",(String)DHT11.temperature);
+                    client->appendSensorValue("temperature",(String)DHT11.temperature);
+                    //you can append more sensors here,and use sendSensorValue to send
                     client->sendSensorValue("humidity",(String)DHT11.humidity);
                     
                     
