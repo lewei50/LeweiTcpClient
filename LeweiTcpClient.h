@@ -153,6 +153,8 @@ class LeweiTcpClient
 		void softwareReset();
 
 		EthernetServer server;
+		int startCommPost;
+		int currentPos;
 };
 
 #endif
