@@ -376,7 +376,7 @@ void LeweiTcpClient::sendUserSwitchState()
 		//msg = NULL;
 	}
 	stateStr = "";
-	stateStr = NULL;
+	//stateStr = NULL;
 	if(strlen(_revCtrlData)>0)
 	{
 		int len=strlen(_revCtrlResult)+strlen(_revCtrlMsg)+strlen(_revCtrlData)+71;
@@ -515,6 +515,7 @@ void LeweiTcpClient::getResponse()
 						
 						execute(currentSwitch->userSwitchFunctionAddr,p2);
 						updateUserSwitchState(p1,p2);
+						//return;
 					}
 					currentSwitch = currentSwitch->next;
 				}
