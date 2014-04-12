@@ -96,7 +96,8 @@ void sendDht11Value()
                     //Serial.println(DHT11.temperature);
                     //sending data
                     //you need to setup sensors named "temperature" and "humidity" on the web before you store the value.
-                    client->sendSensorValue("temperature",(String)DHT11.temperature);
+                    client->appendSensorValue("temperature",(String)DHT11.temperature);
+                    //you can append more sensors here,and use sendSensorValue to send
                     client->sendSensorValue("humidity",(String)DHT11.humidity);
                     break;
                     /*
