@@ -18,7 +18,7 @@ step3:bind your function you write in arduino to the name you defined on website
 
 then it's all under your controll.
 
-because of the difference between arduino boards,we HIGHLY RECOMMENDED your using the lite version for your UNO board.
+because of the difference between arduino boards,we HIGHLY RECOMMENDED using the lite version for your UNO board.
 UNO is running on less memory(2K).
 
 If you are using arduino mega or something else you can try the normal version here:
