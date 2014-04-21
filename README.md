@@ -16,7 +16,7 @@ step3:bind your function you write in arduino to the name you defined on website
 
 then it's all under your controll.
 
-* because of the difference between arduino boards,we HIGHLY RECOMMENDED your using the lite version for your UNO board.
+* because of the difference between arduino boards,we HIGHLY RECOMMENDED you using the lite version for your UNO board.
 * UNO is running on less memory(2K),so you'd better using this one below:
 https://github.com/lewei50/LeweiTcpClient/tree/LeweiTcpClientLite
 * the lite version can only accept 0/1/2 parameter(s) from the website you defined on it.
