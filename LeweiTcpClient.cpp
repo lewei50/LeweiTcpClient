@@ -1,4 +1,3 @@
-
 #include <LeweiTcpClient.h>
 
 UserFunction::UserFunction(void (*callfuct)(),const char *uFunctionName)
@@ -442,6 +441,7 @@ void LeweiTcpClient::updateUserSwitchState(char* switchId,char* switchStat)
 		setRevCtrlMsg("true","ok");
 		setRevCtrlData("");
 		_clientStr = "";
+	}
 }
 
 void LeweiTcpClient::executeStrCmd(String cmdStr)
