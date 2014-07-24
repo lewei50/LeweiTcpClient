@@ -30,7 +30,7 @@ void setup()
   //1.simplest
   client = new LeweiTcpClient(LW_USERKEY, LW_GATEWAY);
   //2.full setting for your network
-  //client = new DeviceBitTcpClient(LW_USERKEY, LW_GATEWAY,mac,ip,mydns,gw,subnet);
+  //client = new LeweiTcpClient(LW_USERKEY, LW_GATEWAY,mac,ip,mydns,gw,subnet);
   
   
   //switchTest is the function you write below to handle your program
