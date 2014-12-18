@@ -74,7 +74,7 @@ UserFunction::UserFunction(void (*callfuct)(char*,char*,char*,char*,char*),const
 
 
 
-UserSwitch::UserSwitch(void (*uSwitchFunctionAddr)(char*),const char *uSwitchId,boolean uSwitchState)
+UserSwitch::UserSwitch(void (*uSwitchFunctionAddr)(char*),const char *uSwitchId,int uSwitchState)
 {
 	//userSwitchOnFunctionAddr=uSwitchOnFunctionAddr;
 	//userSwitchOffFunctionAddr=uSwitchOffFunctionAddr;
@@ -357,7 +357,7 @@ void LeweiTcpClient::sendUserSwitchState()
 		stateStr+="\",\"name\":\"";
 		stateStr+=currentSwitch->userSwitchId;
 		stateStr+="\",\"value\":\"";
-		stateStr+=currentSwitch->userSwitchState;
+		stateStr+=String(currentSwitch->userSwitchState);
 		stateStr+="\",\"status\":\"ok\"}";
 		//Serial.println(functionName);
 		//Serial.println(currentSwitch->userSwitchId);
@@ -501,7 +501,8 @@ void LeweiTcpClient::getResponse()
 				{ 
 					if(String(p1).equals(String(currentSwitch->userSwitchId)))
 					{
-						
+						currentSwitch->userSwitchState = String(p2).toInt();
+						/*
 						if(String(p2).equals("0"))
 						{
 								currentSwitch->userSwitchState = false;
@@ -512,6 +513,7 @@ void LeweiTcpClient::getResponse()
 								currentSwitch->userSwitchState = true;
 								//execute(currentSwitch->userSwitchOffFunctionAddr);
 						}
+						*/
 						
 						execute(currentSwitch->userSwitchFunctionAddr,p2);
 						updateUserSwitchState(p1,p2);

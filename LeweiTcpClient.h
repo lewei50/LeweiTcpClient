@@ -57,20 +57,20 @@ struct UserSwitchNode
 	void (*userSwitchFunctionAddr)(char*);
 	char * p1;
 	const char *userSwitchId;
-	boolean userSwitchState;
+	int userSwitchState;
 	UserSwitchNode*next;
 };
 
 class UserSwitch
 {
 	public:
-		UserSwitch(void (*uSwitchFunctionAddr)(char*),const char *uSwtichId,boolean uSwitchState);
+		UserSwitch(void (*uSwitchFunctionAddr)(char*),const char *uSwtichId,int uSwitchState);
 		//void (*userSwitchOnFunctionAddr)();
 		//void (*userSwitchOffFunctionAddr)();
 		void (*userSwitchFunctionAddr)(char*);
 		char * p1;
 		const char *userSwitchId;
-		boolean userSwitchState;
+		int userSwitchState;
 	private:
 		UserSwitch *next;
 		friend class LeweiTcpClient;
