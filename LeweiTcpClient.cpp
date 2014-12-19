@@ -1,6 +1,7 @@
 
 #include <LeweiTcpClient.h>
 
+/*
 UserFunction::UserFunction(void (*callfuct)(),const char *uFunctionName)
 {
 	userFunctionAddr0=callfuct;
@@ -35,7 +36,6 @@ UserFunction::UserFunction(void (*callfuct)(char*,char*),const char *uFunctionNa
 	next = NULL;
 }
 
-/*
 UserFunction::UserFunction(void (*callfuct)(char*,char*,char*),const char *uFunctionName)
 {
 	userFunctionAddr0=NULL;
@@ -147,7 +147,7 @@ LeweiTcpClient::LeweiTcpClient( const char *userKey,const char *gatewayNo,byte m
 void LeweiTcpClient::setupDefaultValue()
 {
 	//checkFreeMem();
-	head = NULL;
+	//head = NULL;
 	switchHead = NULL;
 	
 	byte _mac[] = {0x74, 0x69, 0x69, 0x2D, 0x30, 0x31};
@@ -522,7 +522,8 @@ void LeweiTcpClient::getResponse()
 					currentSwitch = currentSwitch->next;
 				}
 			}
-			UserFunctionNode * current = head;
+			//UserFunctionNode * current = head;
+			/*
 			while(current!=NULL)
 			{
 //				Serial.println(functionName);
@@ -531,7 +532,7 @@ void LeweiTcpClient::getResponse()
 				{
 		//checkFreeMem();
 					//setRevCtrlMsg("true","execute function");
-					/*
+					
 					if(p5!=NULL)
 					{
 						//Serial.println(5);
@@ -549,7 +550,7 @@ void LeweiTcpClient::getResponse()
 						//Serial.println(3);
 						execute(current->userFunctionAddr3,p1,p2,p3);
 					}
-					else */
+					else 
 						if(p2!=NULL)
 					{
 						//Serial.println(2);
@@ -571,7 +572,7 @@ void LeweiTcpClient::getResponse()
 				}
 				current = current->next;
 			}
-			
+			*/
 		}
 			//free(p1);free(p2);free(p3);free(p4);free(p5);
 			//p1=p2=p3=p4=p5=NULL;
@@ -669,7 +670,7 @@ void LeweiTcpClient::setRevCtrlData(char* data)
 {
 	_revCtrlData = data;
 }
-
+/*
 void LeweiTcpClient::appendSensorValue(String sensorName,String sensorValue)
 {
 	_sensorValueStr +="{\"Name\":\"";
@@ -699,9 +700,9 @@ void LeweiTcpClient::appendSensorValue(String sensorName,long sensorValue)
 {
 	appendSensorValue(sensorName,(String)sensorValue);
 }
+*/
 
-
-
+/*
 void LeweiTcpClient::sendSensorValue(String sensorName,String sensorValue)
 {
 	if (_clientRevCtrl.connected())
@@ -738,47 +739,9 @@ void LeweiTcpClient::sendSensorValue(String sensorName,String sensorValue)
 		// if you didn't get a connection to the server:
 		Serial.print("Send");
 		Serial.println("Fail");
-	}
-	
-	
-	
-	/*
-	//using open.lewei50.com to upload data
-	if (_clientUpload.connect(uploadServer, 80))
-	{
-		Serial.println("clientUploader connected");
-		
-		String connStr ="POST /api/V1/gateway/UpdateSensors/01 HTTP/1.1\r\nuserkey:";
-		connStr +=_userKey;
-		connStr +="\r\nHost:open.lewei50.com\r\nContent-Length:";
-		connStr +=(24+sensorName.length()+sensorValue.length());
-		connStr +="\r\nConnection: close\r\n\r\n[{\"Name\":\"";
-		connStr +=sensorName;
-		connStr +="\",\"Value\":\"";
-		connStr +=sensorValue;
-		connStr +="\"}]";
-		Serial.println(connStr);
-		
-		char* c = (char*)malloc(connStr.length()+1);
-		connStr.toCharArray(c,connStr.length()+1);
-		_clientUpload.print(c);
-		free(c);
-		c = NULL;
-		connStr = "";
-		_clientUpload.stop();
-	}
-	else
-	{
-		// if you couldn't make a connection:
-		Serial.println("connection failed");
-		Serial.println("disconnecting.");
-		_clientUpload.stop();
-	}
-	
-	*/
-	
+	}	
 }
-
+*/
 void LeweiTcpClient::checkFreeMem()
 {
 	int startPos = 0;
@@ -796,6 +759,7 @@ void LeweiTcpClient::checkFreeMem()
 		}
 }
 
+/*
 void LeweiTcpClient::sendSensorValue(String sensorName,int sensorValue)
 {
 	sendSensorValue(sensorName,String(sensorValue));
@@ -822,7 +786,7 @@ void LeweiTcpClient::sendSensorValue(String sensorName,long sensorValue)
 	sendSensorValue(sensorName,(String)sensorValue);
 	
 }
-
+*/
 
 void LeweiTcpClient::execute(void (*callfuct)())
 {
@@ -854,14 +818,14 @@ void LeweiTcpClient::execute(void (*callfuct)(char*,char*,char*,char*,char*),cha
 }
 */
 
-
+/*
 
 void LeweiTcpClient::addUserFunction(UserFunction &uFunction)
 {
 	UserFunctionNode *n1,*n2;
 	n2 = (UserFunctionNode*) new(UserFunctionNode);
 	
-	/*
+	
 	if(uFunction.userFunctionAddr5!=NULL)
 	{
 		//Serial.println("reg addr5.");
@@ -879,7 +843,7 @@ void LeweiTcpClient::addUserFunction(UserFunction &uFunction)
 		//Serial.println("reg addr3.");
 		n2->userFunctionAddr3 = uFunction.userFunctionAddr3;
 	}
-	else */
+	else 
 		if(uFunction.userFunctionAddr2!=NULL)
 	{
 		//Serial.println("reg addr2.");
@@ -916,7 +880,7 @@ void LeweiTcpClient::addUserFunction(UserFunction &uFunction)
 	}
 }
 
-
+*/
 
 void LeweiTcpClient::addUserSwitch(UserSwitch &uSwitch)
 {

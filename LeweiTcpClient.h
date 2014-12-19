@@ -16,6 +16,7 @@ gyangbo@gmail.com
 */
 
 //this structure is to hold the user's function's address and the name configured on the website
+/*
 struct UserFunctionNode
 {
 	void (*userFunctionAddr0)();
@@ -48,7 +49,7 @@ class UserFunction
 		UserFunction *next;
 		friend class LeweiTcpClient;
 };
-
+*/
 
 struct UserSwitchNode
 {
@@ -79,7 +80,7 @@ class UserSwitch
 
 class LeweiTcpClient
 {
-	UserFunctionNode*head;
+	//UserFunctionNode*head;
 	UserSwitchNode*switchHead;
 	
 	public:
@@ -90,16 +91,16 @@ class LeweiTcpClient
 		//LeweiTcpClient( const char *userKey,const char *gatewayNo,byte mac[]);
 		LeweiTcpClient( const char *userKey,const char *gatewayNo,byte mac[],IPAddress ip,IPAddress dns,IPAddress gw,IPAddress subnet);
 		void keepOnline();
-		void appendSensorValue(String sensorName,String sensorValue);
-		void appendSensorValue(String sensorName,int sensorValue);
-		void appendSensorValue(String sensorName,float sensorValue);
-		void appendSensorValue(String sensorName,double sensorValue);
-		void appendSensorValue(String sensorName,long sensorValue);
-		void sendSensorValue(String sensorName,String sensorValue);
-		void sendSensorValue(String sensorName,int sensorValue);
-		void sendSensorValue(String sensorName,float sensorValue);
-		void sendSensorValue(String sensorName,double sensorValue);
-		void sendSensorValue(String sensorName,long sensorValue);
+//		void appendSensorValue(String sensorName,String sensorValue);
+//		void appendSensorValue(String sensorName,int sensorValue);
+//		void appendSensorValue(String sensorName,float sensorValue);
+//		void appendSensorValue(String sensorName,double sensorValue);
+//		void appendSensorValue(String sensorName,long sensorValue);
+//		void sendSensorValue(String sensorName,String sensorValue);
+//		void sendSensorValue(String sensorName,int sensorValue);
+//		void sendSensorValue(String sensorName,float sensorValue);
+//		void sendSensorValue(String sensorName,double sensorValue);
+//		void sendSensorValue(String sensorName,long sensorValue);
 		void connentTcpServer();
 		void execute(void (*callfuct)());
 		void execute(void (*callfuct)(char*),char* p1);
@@ -109,7 +110,7 @@ class LeweiTcpClient
 		void execute(void (*callfuct)(char*,char*,char*,char*,char*),char* p1,char* p2,char* p3,char* p4,char* p5);
 
 
-		void addUserFunction(UserFunction &uFunction);
+		//void addUserFunction(UserFunction &uFunction);
 		void setRevCtrlMsg(char* execResult,char* msg);
 		void setRevCtrlData(char* data);
 		//void directResponse(String respStr);
