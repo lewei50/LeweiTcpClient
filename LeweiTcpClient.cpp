@@ -303,6 +303,7 @@ void LeweiTcpClient::listenServer()
 
 char* LeweiTcpClient::strToChar(String str)
 {
+	//checkFreeMem();
 	char* c = (char*)malloc(str.length()+1);
 	if(!c)
 	{
@@ -311,7 +312,10 @@ char* LeweiTcpClient::strToChar(String str)
 		Serial.println("malloc:F");
 		return NULL;
 	}
+	//checkFreeMem();
 	str.toCharArray(c,str.length()+1);
+	//checkFreeMem();
+	str= "";
 	return c;
 }
 
@@ -374,6 +378,7 @@ void LeweiTcpClient::sendUserSwitchState()
 		char * msg = strToChar(stateStr);
 		setRevCtrlData(msg);
 		//msg = NULL;
+		free(msg);
 	}
 	stateStr = "";
 	//stateStr = NULL;
@@ -396,6 +401,8 @@ void LeweiTcpClient::sendUserSwitchState()
 
 void LeweiTcpClient::updateUserSwitchState(char* switchId,char* switchStat)
 {
+	
+	//Serial.println(switchStat);
 	UserSwitchNode *currentSwitch = switchHead;                    
 	boolean bFirstNode = true;
 	//{\"id\":\"m\",\"name\":\"m\",\"value\":\"0\",\"status\":\"ok\"}
@@ -411,6 +418,7 @@ void LeweiTcpClient::updateUserSwitchState(char* switchId,char* switchStat)
 			//stateStr+=currentSwitch->userSwitchId;
 			stateStr+="\",\"value\":\"";
 			stateStr+=switchStat;
+			currentSwitch->userSwitchState = String(switchStat).toInt();
 			stateStr+="\",\"status\":\"ok\"}"; 
 			bFirstNode = false;
 		}
@@ -425,6 +433,7 @@ void LeweiTcpClient::updateUserSwitchState(char* switchId,char* switchStat)
 		char * msg = strToChar(stateStr);
 		setRevCtrlData(msg);
 		msg = NULL;
+		free(msg);
 	}
 	
 	if(strlen(_revCtrlData)>0)
@@ -443,6 +452,7 @@ void LeweiTcpClient::updateUserSwitchState(char* switchId,char* switchStat)
 		setRevCtrlData("");
 		_clientStr = "";
 	}
+	free(switchStat);
 }
 
 void LeweiTcpClient::getResponse()
