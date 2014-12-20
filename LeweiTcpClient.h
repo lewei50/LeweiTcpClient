@@ -58,20 +58,20 @@ struct UserSwitchNode
 	void (*userSwitchFunctionAddr)(char*);
 	char * p1;
 	const char *userSwitchId;
-	int userSwitchState;
+	long userSwitchState;
 	UserSwitchNode*next;
 };
 
 class UserSwitch
 {
 	public:
-		UserSwitch(void (*uSwitchFunctionAddr)(char*),const char *uSwtichId,int uSwitchState);
+		UserSwitch(void (*uSwitchFunctionAddr)(char*),const char *uSwtichId,long uSwitchState);
 		//void (*userSwitchOnFunctionAddr)();
 		//void (*userSwitchOffFunctionAddr)();
 		void (*userSwitchFunctionAddr)(char*);
 		char * p1;
 		const char *userSwitchId;
-		int userSwitchState;
+		long userSwitchState;
 	private:
 		UserSwitch *next;
 		friend class LeweiTcpClient;
@@ -121,7 +121,7 @@ class LeweiTcpClient
 		char* strToChar(String str);
 		
 		void checkFreeMem();
-		void easySetupMode(boolean bEasyMode);
+		//void easySetupMode(boolean bEasyMode);
 		void updateUserSwitchState(char* p1,char * p2);
 
 	private:
@@ -146,10 +146,10 @@ class LeweiTcpClient
 		
 		void sendUserSwitchState();
 		
-		boolean _bEasyMode;
+		//boolean _bEasyMode;
 		void writeRom(String value);
 		void readRom();
-		void listenServer();
+		//void listenServer();
 		void softwareReset();
 
 		EthernetServer server;

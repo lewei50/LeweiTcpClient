@@ -74,7 +74,7 @@ UserFunction::UserFunction(void (*callfuct)(char*,char*,char*,char*,char*),const
 
 
 
-UserSwitch::UserSwitch(void (*uSwitchFunctionAddr)(char*),const char *uSwitchId,int uSwitchState)
+UserSwitch::UserSwitch(void (*uSwitchFunctionAddr)(char*),const char *uSwitchId,long uSwitchState)
 {
 	//userSwitchOnFunctionAddr=uSwitchOnFunctionAddr;
 	//userSwitchOffFunctionAddr=uSwitchOffFunctionAddr;
@@ -164,12 +164,13 @@ void LeweiTcpClient::setupDefaultValue()
 
 
 	setRevCtrlData("");
-	_bEasyMode = false;
+	//_bEasyMode = false;
 	startCommPost = 75;
 	currentPos = 0;
 
 }
 
+/*
 void LeweiTcpClient::easySetupMode(boolean bEasyMode)
 {
 	_bEasyMode = bEasyMode;
@@ -185,6 +186,7 @@ void LeweiTcpClient::easySetupMode(boolean bEasyMode)
 	  //Serial.println(Ethernet.localIP());
 	}
 }
+*/
 
 void LeweiTcpClient::writeRom(String value)
 {
@@ -242,7 +244,7 @@ void LeweiTcpClient::readRom()
   }
 }
 
-
+/*
 void LeweiTcpClient::listenServer()
 {
   EthernetClient clientWeb = server.available();
@@ -300,6 +302,7 @@ void LeweiTcpClient::listenServer()
   }
   
 }
+*/
 
 char* LeweiTcpClient::strToChar(String str)
 {
@@ -328,11 +331,12 @@ void LeweiTcpClient::sendOnlineCommand()
 void LeweiTcpClient::keepOnline()
 {
 	getResponse();
-	
+	/*
 	if(_bEasyMode)
 	{
 		listenServer();
 	}
+	*/
 		if (_clientRevCtrl.connected()) 
 		{
 			if ((millis()-_starttime) > _postInterval)
@@ -378,17 +382,18 @@ void LeweiTcpClient::sendUserSwitchState()
 		char * msg = strToChar(stateStr);
 		setRevCtrlData(msg);
 		//msg = NULL;
-		free(msg);
 	}
 	stateStr = "";
 	//stateStr = NULL;
 	if(strlen(_revCtrlData)>0)
 	{
 		int len=strlen(_revCtrlResult)+strlen(_revCtrlMsg)+strlen(_revCtrlData)+71;
+		
 		commandString=(char *)malloc(len);	
 		snprintf(commandString, len, "{\"method\":\"response\",\"result\":{\"successful\":%s,\"message\":\"%s\",\"data\":%s}}&^!", _revCtrlResult, _revCtrlMsg,_revCtrlData);
 		
 		_clientRevCtrl.print(commandString);
+		//Serial.println(commandString);
 		free(commandString);
 		commandString = NULL;
 		free(_revCtrlData);
@@ -401,8 +406,8 @@ void LeweiTcpClient::sendUserSwitchState()
 
 void LeweiTcpClient::updateUserSwitchState(char* switchId,char* switchStat)
 {
+	checkFreeMem();
 	
-	//Serial.println(switchStat);
 	UserSwitchNode *currentSwitch = switchHead;                    
 	boolean bFirstNode = true;
 	//{\"id\":\"m\",\"name\":\"m\",\"value\":\"0\",\"status\":\"ok\"}
@@ -432,16 +437,15 @@ void LeweiTcpClient::updateUserSwitchState(char* switchId,char* switchStat)
 		setRevCtrlMsg("true","ok");
 		char * msg = strToChar(stateStr);
 		setRevCtrlData(msg);
-		msg = NULL;
-		free(msg);
 	}
 	
+	stateStr="";
 	if(strlen(_revCtrlData)>0)
 	{
 		int len=strlen(_revCtrlResult)+strlen(_revCtrlMsg)+strlen(_revCtrlData)+71;
 		commandString=(char *)malloc(len);	
 		snprintf(commandString, len, "{\"method\":\"response\",\"result\":{\"successful\":%s,\"message\":\"%s\",\"data\":%s}}&^!", _revCtrlResult, _revCtrlMsg,_revCtrlData);
-		
+		//Serial.println(commandString);
 		_clientRevCtrl.print(commandString);
 		free(commandString);
 		commandString = NULL;
@@ -453,6 +457,7 @@ void LeweiTcpClient::updateUserSwitchState(char* switchId,char* switchStat)
 		_clientStr = "";
 	}
 	free(switchStat);
+	checkFreeMem();
 }
 
 void LeweiTcpClient::getResponse()
@@ -463,7 +468,6 @@ void LeweiTcpClient::getResponse()
 		char c = _clientRevCtrl.read();
 		if(currentPos >startCommPost)
 		{
-			//Serial.print(c);checkFreeMem();
 			_clientStr += c;
 		}
 	}
@@ -526,7 +530,7 @@ void LeweiTcpClient::getResponse()
 						*/
 						
 						execute(currentSwitch->userSwitchFunctionAddr,p2);
-						updateUserSwitchState(p1,p2);
+						//updateUserSwitchState(p1,p2);
 						//return;
 					}
 					currentSwitch = currentSwitch->next;
