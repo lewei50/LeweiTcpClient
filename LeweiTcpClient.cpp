@@ -481,7 +481,7 @@ void LeweiTcpClient::getResponse()
 			//Serial.println("no end!");
 			//return;
 		//}
-		//checkFreeMem();
+		checkFreeMem();
 		
 		String functionName = getParaValueStr(_clientStr,"f");
 			char* p1 = getParaValue(_clientStr,"p1");
@@ -801,22 +801,25 @@ void LeweiTcpClient::sendSensorValue(String sensorName,long sensorValue)
 	
 }
 */
-
+/*
 void LeweiTcpClient::execute(void (*callfuct)())
 {
 	//Serial.println("exec no para");
     callfuct();
 }
+*/
 void LeweiTcpClient::execute(void (*callfuct)(char*),char* p1)
 {
     callfuct(p1);
 }
+
+/*
 void LeweiTcpClient::execute(void (*callfuct)(char*,char*),char* p1,char* p2)
 {
     callfuct(p1,p2);
 }
 
-/*
+
 void LeweiTcpClient::execute(void (*callfuct)(char*,char*,char*),char* p1,char* p2,char* p3)
 {
     callfuct(p1,p2,p3);

@@ -102,12 +102,12 @@ class LeweiTcpClient
 //		void sendSensorValue(String sensorName,double sensorValue);
 //		void sendSensorValue(String sensorName,long sensorValue);
 		void connentTcpServer();
-		void execute(void (*callfuct)());
+		//void execute(void (*callfuct)());
 		void execute(void (*callfuct)(char*),char* p1);
-		void execute(void (*callfuct)(char*,char*),char* p1,char* p2);
-		void execute(void (*callfuct)(char*,char*,char*),char* p1,char* p2,char* p3);
-		void execute(void (*callfuct)(char*,char*,char*,char*),char* p1,char* p2,char* p3,char* p4);
-		void execute(void (*callfuct)(char*,char*,char*,char*,char*),char* p1,char* p2,char* p3,char* p4,char* p5);
+		//void execute(void (*callfuct)(char*,char*),char* p1,char* p2);
+		//void execute(void (*callfuct)(char*,char*,char*),char* p1,char* p2,char* p3);
+		//void execute(void (*callfuct)(char*,char*,char*,char*),char* p1,char* p2,char* p3,char* p4);
+		//void execute(void (*callfuct)(char*,char*,char*,char*,char*),char* p1,char* p2,char* p3,char* p4,char* p5);
 
 
 		//void addUserFunction(UserFunction &uFunction);
