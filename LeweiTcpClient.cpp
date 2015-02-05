@@ -160,7 +160,7 @@ void LeweiTcpClient::setupDefaultValue()
 	snprintf(aliveString, len, "{\"method\":\"update\",\"gatewayNo\":\"%s\",\"userkey\":\"%s\"}&^!", _gatewayNo, _userKey);
 	
 
-	setRevCtrlMsg("false","NotBind");
+	setRevCtrlMsg("false","NotSet");
 
 
 	setRevCtrlData("");
@@ -611,7 +611,7 @@ void LeweiTcpClient::getResponse()
 			_clientRevCtrl.print(commandString);
 			free(commandString);
 			commandString = NULL;
-		setRevCtrlMsg("false","NotBind");
+		setRevCtrlMsg("false","NotSet");
 		setRevCtrlData("");
 		_clientStr = "";
 		
