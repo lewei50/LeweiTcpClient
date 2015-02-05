@@ -10,7 +10,7 @@ IPAddress mydns(8,8,8,8);
 IPAddress gw(192,168,1,1);
 IPAddress subnet(255,255,255,0);
 #define LW_USERKEY "yourapikey"
-#define LW_GATEWAY "01"
+#define LW_GATEWAY "14"
  
 LeweiTcpClient *client;
 void setup()
@@ -29,23 +29,8 @@ void setup()
   //we test transfer 1-5 para from website(you defined on it) to your arduino
   //enjoy it
   
-  UserFunction uf1(test1,"testFunction");
-  client->addUserFunction(uf1);
-  UserFunction uf2 (test2,"testFunction2");
-  client->addUserFunction(uf2);
-  /*
-  UserFunction uf3 (test3,"testFunction3");
-  client->addUserFunction(uf3);
-  UserFunction uf4 (test4,"testFunction4");
-  client->addUserFunction(uf4);
-  UserFunction uf5 (test5,"testFunction5");
-  client->addUserFunction(uf5);
-  UserFunction uf6 (test6,"testFunction6");
-  client->addUserFunction(uf6);
-  */
-  
   //3 para means changeFunction,function name defined on web,default state
-  UserSwitch us1 (test7,"mySwitch",0);
+  UserSwitch us1 (test1,"switch01",0);
   client->addUserSwitch(us1);
   
   /*
@@ -75,58 +60,4 @@ void test1(char * p1)
 //  double pi = 3241.59;//*random(10);
 //  client->sendSensorValue("tcp1",pi);
   Serial.println(p1);
-}
-//function test2 use 2 parameter,on the website,it point to "p1,p2"
-void test2(char * p1,char * p2)
-{
-  Serial.println("test function recall2");
-  client->setRevCtrlMsg("true","finished function2");
-  Serial.println(p1);
-//  client->sendSensorValue("tcp1",301);
-  Serial.println(p2);
-}
-void test3(char * p1,char * p2,char * p3)
-{
-  Serial.println("test function recall3");
-  Serial.println(p1);
-  Serial.println(p2);
-  Serial.println(p3);
-}
-void test4(char * p1,char * p2,char * p3,char * p4)
-{
-  Serial.println("test function recall4");
-  Serial.println(p1);
-  Serial.println(p2);
-  Serial.println(p3);
-  Serial.println(p4);
-}
-void test5(char * p1,char * p2,char * p3,char * p4,char * p5)
-{
-  Serial.println("test function recall5");
-  Serial.println(p1);
-  Serial.println(p2);
-  Serial.println(p3);
-  Serial.println(p4);
-  Serial.println(p5);
-}
-
-void test6()
-{
-  Serial.println("no para");
-}
-
-void test7(char * p1)
-{
-	if(String(p1).equals("0"))
-	{
-		Serial.println("switch on logic");
-	}
-	else if(String(p1).equals("1"))
-	{
-		Serial.println("switch off logic");
-	}
-	else if(String(p1).equals("2"))
-	{
-		Serial.println("other switch change logic");
-	}
 }
