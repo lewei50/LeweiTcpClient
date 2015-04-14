@@ -86,7 +86,7 @@ void LeweiTcpClient::setupDefaultValue()
 {
 	head = NULL;
 	
-	_postInterval = 10000;//server setting is 60000
+	_postInterval = 60000;//server setting is 60000
 	_starttime = millis();
 	
 	int len=strlen(_gatewayNo)+strlen(_userKey)+51;
@@ -195,7 +195,7 @@ void LeweiTcpClient::getResponse()
 				p1=p2=NULL;
 			}
 	
-			functionName = NULL;
+			functionName = "";
 		
 			int len=strlen(_revCtrlResult)+strlen(_revCtrlMsg)+63;
 			commandString=(char *)malloc(len);	
@@ -210,7 +210,6 @@ void LeweiTcpClient::getResponse()
 			
 		}
 		_clientStr = "";
-		_clientStr = NULL;
 	}
 }
 
@@ -228,7 +227,7 @@ char* LeweiTcpClient::getParaValue(String &orig,String paraName)
 String LeweiTcpClient::getParaValueStr(String &orig,String paraName)
 {
 		int functionNameStartPos = orig.indexOf("\""+paraName+"\":\"");
-		if(functionNameStartPos<0)return NULL;
+		if(functionNameStartPos<0)return "";
 		int functionNameEndPos = orig.indexOf("\"",functionNameStartPos+4+paraName.length());
 		String functionName = orig.substring(functionNameStartPos+4+paraName.length(),functionNameEndPos);
 		
@@ -287,7 +286,7 @@ void LeweiTcpClient::sendSensorValue(String sensorName,String sensorValue)
 	connStr+="\"}]}&^!";
 	Serial.print(connStr);
 	
-	connStr = NULL;
+	connStr = "";
 	_sensorValueStr = "";
 }
 
