@@ -5,17 +5,18 @@
 
 byte mac[] = {0x74,0x69,0x69,0x2D,0x30,0x31};
 
-IPAddress ip(192,168,1, 15);
+IPAddress ip(192,168,2, 15);
 IPAddress mydns(8,8,8,8);
-IPAddress gw(192,168,1,1);
+IPAddress gw(192,168,2,1);
 IPAddress subnet(255,255,255,0);
-#define LW_USERKEY "yourapikey"
-#define LW_GATEWAY "14"
- 
+#define LW_USERKEY "your_api_key"
+#define LW_GATEWAY "01"
+int relayPin = 13;
 LeweiTcpClient *client;
 void setup()
 {
   Serial.begin(9600);
+  pinMode(relayPin, OUTPUT); 
   //you can use 2 ways to init your network
   //1.simplest
   //client = new LeweiTcpClient(LW_USERKEY, LW_GATEWAY);
@@ -56,8 +57,19 @@ void loop()
 void test1(char * p1)
 {
   client->setRevCtrlMsg("true","message to server");
-  Serial.println("test function recall1");
+  Serial.println("test function recall");
 //  double pi = 3241.59;//*random(10);
 //  client->sendSensorValue("tcp1",pi);
   Serial.println(p1);
+  if(String(p1).equals("0"))
+	{
+		digitalWrite(relayPin,LOW);
+		Serial.println("on");
+	}
+	else if(String(p1).equals("1"))
+	{
+		digitalWrite(relayPin,HIGH);
+		Serial.println("off");
+	}
+  client->checkFreeMem();
 }
